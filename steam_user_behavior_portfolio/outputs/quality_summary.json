@@ -1,0 +1,16 @@
+{
+  "behavior_rows_raw": 200000,
+  "store_rows_raw": 27075,
+  "behavior_exact_duplicates": 707,
+  "store_duplicate_appid": 0,
+  "store_duplicate_name_normalized": 63,
+  "invalid_behavior_values": 0,
+  "nonpositive_play_rows": 0,
+  "nonunit_purchase_rows": 0,
+  "aux_nonzero_rows": 0,
+  "behavior_rows_clean": 199293,
+  "store_rows_clean": 27012,
+  "behavior_missing_after_parse": 0,
+  "store_missing_release_date": 0,
+  "store_missing_genres": 0
+}

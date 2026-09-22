@@ -1,0 +1,14 @@
+{
+  "mode": "native_subagents",
+  "native_tool_available": true,
+  "requested_real_subagents": true,
+  "spawn_attempts": [
+    {"role": "locator", "agent_id": "/root/ecom_locator", "status": "ok", "output_status": "degraded"},
+    {"role": "mechanism", "agent_id": "/root/ecom_mechanism", "status": "ok", "output_status": "degraded"},
+    {"role": "falsifier", "agent_id": "/root/ecom_falsifier", "status": "ok", "output_status": "degraded"},
+    {"role": "reviewer", "agent_id": "/root/ecom_reviewer", "status": "ok", "output_status": "degraded"}
+  ],
+  "roles": ["locator", "mechanism", "falsifier", "reviewer"],
+  "reviewer_downgrades_accepted": ["C002", "C003", "C004", "C006", "C007"],
+  "note": "角色执行成功；degraded 来自观察窗与经营字段缺失，而非执行失败。"
+}

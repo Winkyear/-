@@ -1,0 +1,14 @@
+{
+  "status": "review",
+  "raw_orders": 99441,
+  "delivered_analysis_orders": 96211,
+  "missing_review_orders": 643,
+  "missing_delivery_days": 8,
+  "duplicate_order_ids": 0,
+  "payment_gap_rate": 0.0005031069632546517,
+  "limitations": [
+    "2016 and 2018-09 onward are excluded from trend window because boundary months are incomplete or sparse",
+    "no product cost, platform fee, refund, traffic, inventory, campaign exposure or experiment assignment",
+    "repeat rate is bounded by the observation window"
+  ]
+}

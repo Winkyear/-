@@ -1,0 +1,21 @@
+{
+  "decision": "以月度经营复盘为入口，确定履约、运费、支付与复购的验证顺序",
+  "primary_method": "metric_system",
+  "secondary_methods": ["contribution", "retention"],
+  "dependency_order": ["quality", "financial_reconciliation", "trend", "structure", "mature_cohort"],
+  "reason": "主任务是经营指标体系与决策优先级；品类/地区/卖家结构和成熟同期群作为辅助视角。",
+  "required_fields": [
+    {"role": "date", "field": "order_purchase_timestamp", "status": "available"},
+    {"role": "order", "field": "order_id", "status": "available"},
+    {"role": "customer", "field": "customer_unique_id", "status": "available"},
+    {"role": "payment", "field": "payment_value/payment_type/installments", "status": "available"},
+    {"role": "refund", "field": "refund amount and date", "status": "missing"},
+    {"role": "profit", "field": "COGS/platform fee/marketing cost", "status": "missing"}
+  ],
+  "questions": [],
+  "stop_conditions": ["no refund means GMV cannot be net revenue", "no exposure/control means no incremental effect"],
+  "fallback_if_missing": [
+    {"missing": "refund and cost", "fallback": "只报告 GMV、运费和支付结构，不计算净收入、毛利或 ROI"},
+    {"missing": "traffic and experiment", "fallback": "只输出关联诊断与实验设计"}
+  ]
+}

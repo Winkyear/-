@@ -1,0 +1,68 @@
+{
+  "claims": [
+    {
+      "claim_id": "C001",
+      "statement": "2017-01 至 2018-08 的已送达订单样本包含 96,211 笔订单和 93,104 名客户，商品金额 GMV 为 R$13,181,027.13，客单价为 R$137.00。",
+      "level": "L0", "status": "fact", "evidence_ids": ["E001"],
+      "scope": {"grain": "order_id", "filter": "delivered"}, "confidence": "high",
+      "limitations": ["GMV 不含运费且不等于会计收入或利润。", "缺少退款、成本、税费与平台费。"],
+      "identification_strategy": null, "next_test": "补充退款与成本字段后建立净收入和贡献毛利口径。"
+    },
+    {
+      "claim_id": "C002",
+      "statement": "总体运费占商品金额与运费合计的 14.29%；在纳入高交易量筛选的品类中，electronics 的该比例最高，为 22.77%。",
+      "level": "L1", "status": "comparison", "evidence_ids": ["E002"],
+      "scope": {"grain": "category", "filter": "delivered; category orders >= 500"}, "confidence": "high",
+      "limitations": ["高比例可能来自低 GMV 分母。", "freight_value 不是平台实际物流成本。"],
+      "identification_strategy": null, "next_test": "补充重量、距离、承运商与补贴后拆解物流成本。"
+    },
+    {
+      "claim_id": "C003",
+      "statement": "在可判定履约状态的已送达订单中，晚到率为 8.13%；晚到组平均评分为 2.57、差评率为 53.98%，准时组分别为 4.30 和 9.17%。",
+      "level": "L1", "status": "association", "evidence_ids": ["E003"],
+      "scope": {"grain": "order_id", "comparison": "late vs on-time"}, "confidence": "high",
+      "limitations": ["未控制品类、地区、卖家、距离和旺季等混杂。", "差异不证明晚到导致差评。"],
+      "identification_strategy": null, "next_test": "按州、卖家、品类分层随机测试晚到预警与主动沟通。"
+    },
+    {
+      "claim_id": "C004",
+      "statement": "按每单最大支付记录定义主支付方式，信用卡主支付订单占 75.48%，对应订单归组后的支付金额占 78.46%，平均分期数为 3.55。",
+      "level": "L1", "status": "structure", "evidence_ids": ["E004"],
+      "scope": {"grain": "order_id", "definition": "largest payment record"}, "confidence": "high",
+      "limitations": ["混合支付订单被压缩为单一标签。", "主支付方式占比不等于 tender-level 流水份额。"],
+      "identification_strategy": null, "next_test": "保留支付流水粒度并识别混合支付。"
+    },
+    {
+      "claim_id": "C005",
+      "statement": "支付金额与商品金额加运费的总体绝对差额率为 0.0503%，可用于汇总层对账；逐单财务结算仍需隔离差额订单。",
+      "level": "L1", "status": "reconciliation", "evidence_ids": ["E001", "E004"],
+      "scope": {"grain": "order_id", "measure": "absolute payment gap"}, "confidence": "high",
+      "limitations": ["绝对差额不保留方向。", "缺少退款、拒付和手续费。"],
+      "identification_strategy": null, "next_test": "补齐财务流水并对差额订单逐笔归因。"
+    },
+    {
+      "claim_id": "C006",
+      "statement": "全窗口复购客户率为 3.00%；仅在具备完整跟踪期的成熟首购 cohort 中，加权复购率为 2.28%。",
+      "level": "L0", "status": "fact", "evidence_ids": ["E005"],
+      "scope": {"grain": "customer_unique_id", "window": "mature 90-day cohort"}, "confidence": "high",
+      "limitations": ["左侧可能漏掉更早购买，右侧无法观察窗口后的复购。", "两种复购率观察时长不同，不能把差值解释为趋势。"],
+      "identification_strategy": null, "next_test": "扩展历史与未来观察窗，建立稳定 cohort 留存曲线。"
+    },
+    {
+      "claim_id": "C007",
+      "statement": "当前样本中，SP 州贡献 38.36% GMV，GMV 前十品类合计占 62.47%，累计达到既定头部份额需要 531 个卖家。",
+      "level": "L0", "status": "fact", "evidence_ids": ["E006"],
+      "scope": {"grain": "state/category/seller"}, "confidence": "high",
+      "limitations": ["GMV 集中不等于利润、市场份额或供应风险集中。"],
+      "identification_strategy": null, "next_test": "叠加毛利、退款、售后和缺货率构建风险集中度。"
+    },
+    {
+      "claim_id": "C008",
+      "statement": "建议优先建设卖家×州×品类的履约监控与试点、隔离支付对账异常订单，并对成熟首购 cohort 设计复购实验。",
+      "level": "L3", "status": "decision_recommendation", "evidence_ids": ["E003", "E004", "E005", "E006"],
+      "scope": {"decision": "operations prioritization"}, "confidence": "medium",
+      "limitations": ["没有随机或可比对照。", "缺少流量、触达、成本与利润字段，不能承诺效果或 ROI。"],
+      "identification_strategy": "分层随机试验与服务护栏", "next_test": "先设定 MDE、实验周期和成本护栏，再逐步扩量。"
+    }
+  ]
+}

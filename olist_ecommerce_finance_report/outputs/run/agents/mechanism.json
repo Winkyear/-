@@ -1,0 +1,107 @@
+{
+  "agent": "mechanism",
+  "status": "degraded",
+  "generated_at": "2026-09-22T00:00:00+08:00",
+  "findings": [
+    {
+      "statement": "支付结构与客单价同步：信用卡主支付订单占75.48%，客单价143.19，高于boleto的121.39、借记卡的119.88和voucher的94.80。",
+      "level": "L1",
+      "evidence_ids": ["E004"],
+      "limitations": ["支付类型按每单最大支付记录归类，拆分支付可能被简化", "未控制品类、地区、客群及促销结构"],
+      "confidence": "high",
+      "mechanism_status": "supported_candidate"
+    },
+    {
+      "statement": "分期档位与客单价呈单调共变：1期、2-3期、4-5期、6-9期和10+期的客单价分别为82.49、113.64、148.58、218.60和372.08。",
+      "level": "L1",
+      "evidence_ids": ["E004"],
+      "limitations": ["该梯度可由高价商品更容易被分期的反向选择产生", "没有用户信用、利率、额度、促销曝光或随机分期方案"],
+      "confidence": "high",
+      "mechanism_status": "supported_candidate"
+    },
+    {
+      "statement": "“分期提高客单价”不能由当前分组结果确认，因为商品价格可能同时决定用户是否分期以及分期期数。",
+      "level": "L2",
+      "evidence_ids": ["E004"],
+      "limitations": ["只有横截面分组，无处理组、对照组和支付选择前的可比基线"],
+      "confidence": "high",
+      "mechanism_status": "alternative"
+    },
+    {
+      "statement": "履约时长与评价呈稳定梯度：0-7天到31+天的平均评分由4.42降至2.24，差评率由7.44%升至63.25%。",
+      "level": "L1",
+      "evidence_ids": ["E003"],
+      "limitations": ["未同时控制品类、州、卖家、季节与订单价值", "643个订单缺失评价"],
+      "confidence": "high",
+      "mechanism_status": "supported_candidate"
+    },
+    {
+      "statement": "晚到组与较差评价同步：晚到率8.13%，晚到组平均评分2.57、差评率53.98%，准时组分别为4.30和9.17%。",
+      "level": "L1",
+      "evidence_ids": ["E003"],
+      "limitations": ["晚到是结果后定义，无法排除远距离、卖家能力、品类特征和高峰期共同影响", "自动质量检查将同日多单标记为duplicate_date，这是日粒度多订单而非必然重复"],
+      "confidence": "high",
+      "mechanism_status": "supported_candidate"
+    },
+    {
+      "statement": "履约与评价的同步关系不能进一步升级为“延迟导致差评”，但可作为卖家×州×品类分层和时效改善实验的优先候选。",
+      "level": "L2",
+      "evidence_ids": ["E003"],
+      "limitations": ["当前无路线、承运商、仓网、库存、促销曝光和实验分组字段"],
+      "confidence": "medium",
+      "mechanism_status": "alternative"
+    },
+    {
+      "statement": "electronics在订单数不少于500的品类中运费占比最高，为22.77%，但其客单价仅61.58，平均每单运费约18.15，低于全体约22.83。",
+      "level": "L1",
+      "evidence_ids": ["E002"],
+      "limitations": ["运费占比的分母包含GMV，低商品价格可在绝对运费不高时折射出高占比", "无成本运费、重量、体积、距离、承运商与包裹粒度"],
+      "confidence": "high",
+      "mechanism_status": "alternative"
+    },
+    {
+      "statement": "“electronics的高运费占比由物流成本过高导致”不可检验；当前数据更支持先区分低客单价分母效应与绝对运费。",
+      "level": "L2",
+      "evidence_ids": ["E002"],
+      "limitations": ["数据只含向客户收取的freight_value，不含平台实际物流成本或运费补贴"],
+      "confidence": "high",
+      "mechanism_status": "not_testable"
+    },
+    {
+      "statement": "客户全窗口复购率为3.00%，只纳入具备90天后续观察期的成熟首购cohort后，90天复购率为2.28%，成熟cohort的90天复购率约介于1.61%-3.62%。",
+      "level": "L1",
+      "evidence_ids": ["E005"],
+      "limitations": ["全窗口复购与90天复购的时长定义不同，不应直接解读其高低差为趋势", "数据截止2018-08，晚期首购客户的长期复购不可观测"],
+      "confidence": "high",
+      "mechanism_status": "supported_candidate"
+    },
+    {
+      "statement": "当前工件无法判定低复购由履约、评价、支付、品类或渠道中的任一机制导致，也无法估计真实客户终身价值。",
+      "level": "L2",
+      "evidence_ids": ["E003", "E004", "E005"],
+      "limitations": ["缺少稳定曝光、流量来源、营销触达、取消/退款、竞品购买和观察窗口后订单", "未见将首单履约与后续复购按客户粒度连接的分层工件"],
+      "confidence": "high",
+      "mechanism_status": "not_testable"
+    }
+  ],
+  "conflicts": [
+    {
+      "topic": "installments_and_aov",
+      "conflict": "分期档位与客单价的单调关系同时兼容“分期放大购买力”和“高价订单更容易选择分期”，当前证据不能区分方向。"
+    },
+    {
+      "topic": "freight_share",
+      "conflict": "品类高运费占比不等于高绝对物流成本；electronics的高占比与低客单价同时出现。"
+    },
+    {
+      "topic": "delivery_and_reviews",
+      "conflict": "履约时长梯度强且方向一致，但高峰月、远距离地区、品类与卖家可同时影响配送和评价。"
+    }
+  ],
+  "missing_data": [
+    "支付方案可用性、信用额度、利率、分期补贴、促销曝光与实验分组",
+    "物流路线、距离、仓网、承运商、重量/体积、库存与卖家出库耗时",
+    "平台实际物流成本、运费补贴、商品成本、平台费、退款与会计收入",
+    "观察窗口结束后的订单、渠道与营销触达，以及首单履约到后续复购的客户级联表"
+  ]
+}

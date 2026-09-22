@@ -1,0 +1,295 @@
+{
+  "row_grain": "user-game aggregate",
+  "users": 12393,
+  "games": 5153,
+  "purchase_pairs": 128801,
+  "played_pairs": 70474,
+  "unplayed_purchase_pairs": 58327,
+  "overall_activation_rate": 0.547154137002042,
+  "playable_purchase_pairs": 117492,
+  "actionable_unplayed_purchase_pairs": 47018,
+  "playable_activation_rate": 0.5998195621829572,
+  "never_played_game_count": 1555,
+  "never_played_game_purchase_share": 0.08780211333762937,
+  "total_play_hours": 3445365.8000000003,
+  "median_user_library": 2.0,
+  "median_user_play_hours": 13.5,
+  "top10_purchase_share": 0.12092297420051086,
+  "top10_hours_share": 0.5817984842132001,
+  "top1pct_purchase_share": 0.2693457348933626,
+  "top1pct_hours_share": 0.7759903752454964,
+  "one_purchase_game_share": 0.22705220260042694,
+  "matched_purchase_share": 0.4846623861615981,
+  "matched_game_share": 0.4628371822239472,
+  "segment_thresholds": {
+    "library_q25": 1.0,
+    "library_q75": 6.0,
+    "hours_q25": 1.3,
+    "hours_q75": 155.6,
+    "activation_median": 1.0
+  },
+  "segments": {
+    "大库低启动": {
+      "users": 3044,
+      "avg_library_size": 32.82555847568988,
+      "avg_played_games": 18.796320630749015,
+      "avg_activation_rate": 0.5538698808585633,
+      "avg_total_play_hours": 778.7613666228647,
+      "median_total_play_hours": 302.1,
+      "user_share": 0.24562252884692973
+    },
+    "常规玩家": {
+      "users": 6194,
+      "avg_library_size": 2.0295447206974493,
+      "avg_played_games": 1.42541168873103,
+      "avg_activation_rate": 0.8059573781078464,
+      "avg_total_play_hours": 58.30122699386503,
+      "median_total_play_hours": 9.4,
+      "user_share": 0.49979827321875253
+    },
+    "深度活跃": {
+      "users": 930,
+      "avg_library_size": 3.009677419354839,
+      "avg_played_games": 3.009677419354839,
+      "avg_activation_rate": 1.0,
+      "avg_total_play_hours": 766.380752688172,
+      "median_total_play_hours": 425.55,
+      "user_share": 0.07504236262406197
+    },
+    "轻量用户": {
+      "users": 2225,
+      "avg_library_size": 0.9892134831460674,
+      "avg_played_games": 0.7325842696629213,
+      "avg_activation_rate": 0.7405724670604271,
+      "avg_total_play_hours": 0.4333932584269663,
+      "median_total_play_hours": 0.4,
+      "user_share": 0.1795368353102558
+    }
+  },
+  "top_genres": [
+    {
+      "primary_genre": "Action",
+      "purchase_pairs": 44508,
+      "played_pairs": 29704,
+      "total_play_hours": 1795640.9,
+      "unique_users": 9727,
+      "unique_games": 1110,
+      "activation_rate": 0.667386,
+      "play_hours_share": 0.844379
+    },
+    {
+      "primary_genre": "Strategy",
+      "purchase_pairs": 1902,
+      "played_pairs": 1262,
+      "total_play_hours": 113295.4,
+      "unique_users": 938,
+      "unique_games": 85,
+      "activation_rate": 0.663512,
+      "play_hours_share": 0.053276
+    },
+    {
+      "primary_genre": "Indie",
+      "purchase_pairs": 3719,
+      "played_pairs": 2564,
+      "total_play_hours": 82348.5,
+      "unique_users": 1335,
+      "unique_games": 266,
+      "activation_rate": 0.689433,
+      "play_hours_share": 0.038723
+    },
+    {
+      "primary_genre": "RPG",
+      "purchase_pairs": 1840,
+      "played_pairs": 1024,
+      "total_play_hours": 36212.6,
+      "unique_users": 727,
+      "unique_games": 84,
+      "activation_rate": 0.556522,
+      "play_hours_share": 0.017029
+    },
+    {
+      "primary_genre": "Adventure",
+      "purchase_pairs": 4365,
+      "played_pairs": 2336,
+      "total_play_hours": 30228.4,
+      "unique_users": 1388,
+      "unique_games": 392,
+      "activation_rate": 0.535166,
+      "play_hours_share": 0.014215
+    },
+    {
+      "primary_genre": "Simulation",
+      "purchase_pairs": 1052,
+      "played_pairs": 605,
+      "total_play_hours": 21030.4,
+      "unique_users": 514,
+      "unique_games": 90,
+      "activation_rate": 0.575095,
+      "play_hours_share": 0.009889
+    },
+    {
+      "primary_genre": "Free to Play",
+      "purchase_pairs": 1675,
+      "played_pairs": 705,
+      "total_play_hours": 18525.8,
+      "unique_users": 1016,
+      "unique_games": 48,
+      "activation_rate": 0.420896,
+      "play_hours_share": 0.008712
+    },
+    {
+      "primary_genre": "Casual",
+      "purchase_pairs": 2110,
+      "played_pairs": 1027,
+      "total_play_hours": 16214.1,
+      "unique_users": 946,
+      "unique_games": 227,
+      "activation_rate": 0.48673,
+      "play_hours_share": 0.007624
+    }
+  ],
+  "top_purchase_games": [
+    {
+      "game_name": "Dota 2",
+      "purchase_users": 4841,
+      "played_users": 4841,
+      "activation_rate": 1.0,
+      "total_play_hours": 981684.6
+    },
+    {
+      "game_name": "Team Fortress 2",
+      "purchase_users": 2323,
+      "played_users": 2323,
+      "activation_rate": 1.0,
+      "total_play_hours": 173673.3
+    },
+    {
+      "game_name": "Unturned",
+      "purchase_users": 1563,
+      "played_users": 1069,
+      "activation_rate": 0.683941,
+      "total_play_hours": 16096.4
+    },
+    {
+      "game_name": "Counter-Strike Global Offensive",
+      "purchase_users": 1412,
+      "played_users": 1377,
+      "activation_rate": 0.975212,
+      "total_play_hours": 322771.6
+    },
+    {
+      "game_name": "Half-Life 2 Lost Coast",
+      "purchase_users": 981,
+      "played_users": 177,
+      "activation_rate": 0.180428,
+      "total_play_hours": 184.4
+    },
+    {
+      "game_name": "Counter-Strike Source",
+      "purchase_users": 978,
+      "played_users": 715,
+      "activation_rate": 0.731084,
+      "total_play_hours": 96075.5
+    },
+    {
+      "game_name": "Left 4 Dead 2",
+      "purchase_users": 951,
+      "played_users": 801,
+      "activation_rate": 0.842271,
+      "total_play_hours": 33596.7
+    },
+    {
+      "game_name": "Counter-Strike",
+      "purchase_users": 856,
+      "played_users": 568,
+      "activation_rate": 0.663551,
+      "total_play_hours": 134261.1
+    },
+    {
+      "game_name": "Warframe",
+      "purchase_users": 847,
+      "played_users": 424,
+      "activation_rate": 0.50059,
+      "total_play_hours": 27074.6
+    },
+    {
+      "game_name": "Half-Life 2 Deathmatch",
+      "purchase_users": 823,
+      "played_users": 198,
+      "activation_rate": 0.240583,
+      "total_play_hours": 3712.9
+    }
+  ],
+  "top_hours_games": [
+    {
+      "game_name": "Dota 2",
+      "purchase_users": 4841,
+      "played_users": 4841,
+      "activation_rate": 1.0,
+      "total_play_hours": 981684.6
+    },
+    {
+      "game_name": "Counter-Strike Global Offensive",
+      "purchase_users": 1412,
+      "played_users": 1377,
+      "activation_rate": 0.975212,
+      "total_play_hours": 322771.6
+    },
+    {
+      "game_name": "Team Fortress 2",
+      "purchase_users": 2323,
+      "played_users": 2323,
+      "activation_rate": 1.0,
+      "total_play_hours": 173673.3
+    },
+    {
+      "game_name": "Counter-Strike",
+      "purchase_users": 856,
+      "played_users": 568,
+      "activation_rate": 0.663551,
+      "total_play_hours": 134261.1
+    },
+    {
+      "game_name": "Sid Meier's Civilization V",
+      "purchase_users": 596,
+      "played_users": 554,
+      "activation_rate": 0.92953,
+      "total_play_hours": 99821.3
+    },
+    {
+      "game_name": "Counter-Strike Source",
+      "purchase_users": 978,
+      "played_users": 715,
+      "activation_rate": 0.731084,
+      "total_play_hours": 96075.5
+    },
+    {
+      "game_name": "The Elder Scrolls V Skyrim",
+      "purchase_users": 717,
+      "played_users": 677,
+      "activation_rate": 0.944212,
+      "total_play_hours": 70889.3
+    },
+    {
+      "game_name": "Garry's Mod",
+      "purchase_users": 731,
+      "played_users": 666,
+      "activation_rate": 0.911081,
+      "total_play_hours": 49725.3
+    },
+    {
+      "game_name": "Call of Duty Modern Warfare 2 - Multiplayer",
+      "purchase_users": 343,
+      "played_users": 291,
+      "activation_rate": 0.848397,
+      "total_play_hours": 42009.9
+    },
+    {
+      "game_name": "Left 4 Dead 2",
+      "purchase_users": 951,
+      "played_users": 801,
+      "activation_rate": 0.842271,
+      "total_play_hours": 33596.7
+    }
+  ]
+}

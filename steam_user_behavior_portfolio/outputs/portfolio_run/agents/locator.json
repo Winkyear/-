@@ -1,0 +1,102 @@
+{
+  "agent": "locator",
+  "status": "degraded",
+  "generated_at": "2026-09-22T17:31:52+08:00",
+  "findings": [
+    {
+      "statement": "当前处理后主表覆盖 12,393 名用户、5,153 个游戏名和 128,801 个购买用户-游戏对，其中 70,474 对观察到正游玩时长。",
+      "level": "L0",
+      "evidence_ids": ["E001"],
+      "limitations": ["数据没有日期字段，不能定位时间上的上升、下降或拐点。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "当前 dim_user_segments.csv 的四个互斥分层合计覆盖全部 12,393 名用户：常规玩家 6,194 人（49.980%）、收藏型未激活 3,044 人（24.562%）、深度活跃 930 人（7.504%）、轻量用户 2,225 人（17.954%）。",
+      "level": "L0",
+      "evidence_ids": ["E004"],
+      "limitations": ["outputs/evidence.json 的 E004 仍保留上一版人数，当前人数以处理后 CSV 直接重算值为准。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "用户级 activation_rate 在 12,393 人中有 12,369 个非空值（99.806%）；24 个空值全部位于轻量用户分层，因此轻量用户的平均启动率实际基于 2,201 人而非 2,225 人。",
+      "level": "L0",
+      "evidence_ids": ["E004"],
+      "limitations": ["空值来自可行动游戏库分母为零；该标签依赖流水线中的 observed_playable 规则。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "原始购买后未启动缺口为 58,327 对，原始启动率为 54.715%；按流水线排除 11,309 个全样本从未出现 play 的购买对后，可行动缺口为 47,018 对，可行动启动率为 59.982%，比原始口径高 5.267 个百分点。",
+      "level": "L1",
+      "evidence_ids": ["E002"],
+      "limitations": ["observed_playable=0 是样本内标签，不等同于经过外部内容类型核验的不可独立启动。", "outputs/evidence.json 的 E002 尚未写入可行动口径字段；数值由 fact_user_game.csv 按当前 analysis_pipeline.py 公式复算。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "收藏型未激活用户占全部用户 24.562%，对应 42,705 个可行动未启动购买对，占全体可行动缺口的 90.827%；其余三个分层合计占 9.173%。",
+      "level": "L1",
+      "evidence_ids": ["E002", "E004"],
+      "limitations": ["分层由当前样本的分位数规则生成，不是外部固定用户标签。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "高规模低激活象限包含 226 个游戏（4.386%），记录 20,925 个未启动购买对；这些购买对占 47,018 个可行动缺口的 44.504%。",
+      "level": "L1",
+      "evidence_ids": ["E002", "E003"],
+      "limitations": ["象限阈值只在购买用户数不少于 20 且 observed_playable=1 的游戏上计算。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "购买与时长的集中度明显不同：购买用户数前 10 个游戏占全部购买对 12.092%，但游玩时长前 10 个游戏占全部时长 58.180%；前 1% 的 52 个游戏分别占购买对 26.935% 和游玩时长 77.599%。",
+      "level": "L1",
+      "evidence_ids": ["E003"],
+      "limitations": ["前 1% 按 5,153 个游戏向上取整为 52 个；购买榜与时长榜不是同一组游戏。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "类型分析覆盖的精确商店匹配子样本占全部购买对 48.466%、游戏 46.284%、已启动对 56.770% 和游玩时长 61.723%；该子样本中 Action 占购买对 71.298%、游玩时长 84.438%，Action、Strategy、Indie 三类合计占游玩时长 93.638%。",
+      "level": "L1",
+      "evidence_ids": ["E005", "E006"],
+      "limitations": ["类型结论仅适用于精确名称匹配到商店元数据的记录，不能直接外推到未匹配的 51.534% 购买对。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "精确商店匹配子样本的启动率为 64.090%，未匹配子样本为 45.899%；按各自购买对占比相对全体 54.715% 加权后，两组分别贡献 +4.543 和 -4.543 个百分点，汇总时完全抵消。",
+      "level": "L1",
+      "evidence_ids": ["E002", "E006"],
+      "limitations": ["这是按 store_matched 分组的算术分解，只定位抵消，不解释两组差异。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "在精确匹配类型子样本内，以 64.090% 的总体启动率为基准，正向加权偏离合计 +2.334 个百分点、负向加权偏离合计 -2.334 个百分点；Action（+1.889）、Indie（+0.289）和 Strategy（+0.069）是主要正向项，Adventure（-0.739）、Free to Play（-0.590）和 Casual（-0.521）是主要负向项。",
+      "level": "L1",
+      "evidence_ids": ["E005", "E006"],
+      "limitations": ["贡献单位为相对匹配子样本启动率的购买占比加权百分点；它不是因果贡献。", "长尾小类型的购买对很少，未据此做稳定性排序。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "四个正式内容象限合计仅覆盖 1,091 个游戏（21.172%），但覆盖 79.565% 的购买对；另有 2,507 个游戏（48.651%）被标为样本不足，1,555 个游戏（30.177%）被标为非独立游玩候选。",
+      "level": "L0",
+      "evidence_ids": ["E002", "E003"],
+      "limitations": ["样本不足阈值固定为购买用户数少于 20；非独立游玩候选仅表示全样本没有 play 记录。"],
+      "confidence": "high"
+    }
+  ],
+  "conflicts": [
+    {
+      "statement": "outputs/evidence.json 的 E004 与当前 agg_segment_metrics.csv 不是同一版分层结果：证据文件记录 6,173/3,210/819/2,191 人，当前 CSV 为 6,194/3,044/930/2,225 人。",
+      "evidence_ids": ["E004"],
+      "impact": "正式报告若直接引用旧 E004，会同时出现两套分层规模。"
+    },
+    {
+      "statement": "outputs/evidence.json 的 E002 只保留原始启动口径，而当前 analysis_pipeline.py 与 fact_user_game.csv 已包含 observed_playable 和 playable_purchase 字段。",
+      "evidence_ids": ["E002"],
+      "impact": "可行动缺口 47,018 对与可行动启动率 59.982% 目前可由 CSV 复算，但尚未在证据包中结构化落盘。"
+    }
+  ],
+  "missing_data": [
+    "缺少日期或事件时间字段，无法执行时间序列定位与历史基线比较。",
+    "缺少官方内容类型或可独立启动标识，无法外部确认 1,555 个 observed_playable=0 游戏名的真实类别。",
+    "商店元数据仅覆盖 48.466% 的购买对，未匹配部分缺少 primary_genre 等维度。",
+    "缺少版本号或生成时间绑定，无法仅凭现有文件自动判定 evidence.json 与处理后 CSV 的权威版本。"
+  ]
+}

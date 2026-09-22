@@ -1,0 +1,11 @@
+{
+  "primary_lens": "opportunity",
+  "visual_structure": "pyramid",
+  "chart_grammar": ["distribution", "decomposition", "matrix"],
+  "density": 6,
+  "recommendation_form": "decision_tree",
+  "theme": "apple-graphite",
+  "style": "editorial",
+  "previous_signature": null,
+  "diff_from_previous": "本会话首次正式报告，无上一版签名"
+}

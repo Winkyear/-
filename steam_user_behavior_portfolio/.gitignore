@@ -1,0 +1,10 @@
+# 原始数据和处理后的大文件可按 README 下载或重新生成
+data/raw/
+data/processed/
+build/
+.chart-data-*/
+src/__pycache__/
+
+# 本地数据库和检查缓存不对外发布
+outputs/*.db
+outputs/**/*.inspect.ndjson

@@ -1,0 +1,34 @@
+{
+  "main_table": "fact_user_game",
+  "metric_fields": {
+    "purchase_flag": "purchased",
+    "play_flag": "played",
+    "play_hours": "play_hours",
+    "store_match_flag": "store_matched"
+  },
+  "decision": "确定用户召回与内容激活的优先级",
+  "grain": "user_id × name_key",
+  "baseline": "全量分布与 P25/P50/P75 分位数",
+  "dimensions": ["segment", "content_quadrant", "primary_genre"],
+  "definitions": {
+    "purchase_pair": "同一用户与同一游戏至少出现一条 purchase 记录",
+    "played_pair": "同一用户与同一游戏的累计 play_hours 大于 0",
+    "raw_activation_rate": "played_pair / purchase_pair，包含 DLC 等可能不可独立启动的拥有记录",
+    "actionable_activation_rate": "played_pair / observed_playable_purchase_pair，其中 observed_playable 表示该游戏名在全样本至少出现一次 play",
+    "unplayed_purchase": "playable_purchase=1 且 played=0"
+  },
+  "field_status": {
+    "user_id": "confirmed",
+    "game_name": "confirmed",
+    "behavior": "confirmed",
+    "value": "confirmed",
+    "primary_genre": "inferred_from_dictionary",
+    "price": "inferred_from_dictionary"
+  },
+  "exclusions": ["707 条完全重复记录", "无法解析主键或行为的记录"],
+  "assumptions": ["缺少 play 行表示未观察到游玩", "全样本从未出现 play 的内容可能包含 DLC/地图包，因此从可行动启动率分母排除并单独披露", "商店元数据仅用于补充关联分析"],
+  "quality": {
+    "outlier_z": 4,
+    "warning_z": 3
+  }
+}

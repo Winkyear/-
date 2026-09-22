@@ -1,0 +1,7 @@
+name: olist-ecommerce-finance
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pandas>=2.0
+  - numpy>=1.24

@@ -1,0 +1,26 @@
+{
+  "decision": "帮助电商经营与支付团队确定支付结构、履约体验、品类运费和客户复购的数据补齐与实验优先级",
+  "main_table": "orders_enriched",
+  "date_field": "order_purchase_timestamp",
+  "metric_fields": {
+    "gmv": "gmv",
+    "payment_value": "payment_value",
+    "freight": "freight_value",
+    "review_score": "review_score",
+    "late_flag": "is_late"
+  },
+  "grain": "one row per order",
+  "time_window": "2017-01-01..2018-08-31",
+  "baseline": "同窗口月度趋势与分组横截面对比；不将自然增长写成策略效果",
+  "filters": ["order_status=delivered", "purchase_month between 2017-01 and 2018-08"],
+  "definitions": {
+    "gmv": "delivered order item price sum, excluding freight; not recognized revenue",
+    "aov": "gmv / distinct delivered orders",
+    "freight_share": "freight / (gmv + freight)",
+    "late": "delivered_customer_date > estimated_delivery_date",
+    "bad_review": "review_score <= 2",
+    "repeat_90d": "second delivered order within 90 days; only mature acquisition cohorts"
+  },
+  "assumptions": ["将 Olist 公开数据视为历史教学样本", "无退款、成本与会计确认字段时不将 GMV 称为收入"],
+  "stop_conditions": ["支付与订单金额无法对账时停止支付结论", "未成熟 cohort 不进入 90 天复购率分母", "无曝光或对照时不输出因果或增量 ROI"]
+}

@@ -1,0 +1,253 @@
+{
+  "schema_version": "1.0",
+  "status": "DEGRADED",
+  "main_table": "fact_user_game",
+  "key_fields": [
+    {
+      "sheet": "fact_user_game",
+      "role": "purchase_flag",
+      "field": "purchased"
+    },
+    {
+      "sheet": "fact_user_game",
+      "role": "play_flag",
+      "field": "played"
+    },
+    {
+      "sheet": "fact_user_game",
+      "role": "play_hours",
+      "field": "play_hours"
+    },
+    {
+      "sheet": "fact_user_game",
+      "role": "store_match_flag",
+      "field": "store_matched"
+    }
+  ],
+  "flags": [
+    {
+      "type": "duplicate_date",
+      "severity": "warning",
+      "sheet": "fact_user_game",
+      "field": "user_id",
+      "count": 128800,
+      "message": "主表同一天有多行，需确认是否存在隐藏维度或重复写入。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "appid",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "name",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "release_date",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "release_year",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "developer",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "publisher",
+      "missing_rate": 0.515391961242537,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "platforms",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "categories",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "genres",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "primary_genre",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "steamspy_tags",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "positive_ratings",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "negative_ratings",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "rating_count",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "positive_rate",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "average_playtime",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "median_playtime",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "owners",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "owner_midpoint",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "price",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "price_band",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "field_missing",
+      "severity": "error",
+      "sheet": "fact_user_game",
+      "field": "is_free",
+      "missing_rate": 0.5153376138384019,
+      "message": "字段缺失比例较高，相关指标需要降级或排除。"
+    },
+    {
+      "type": "metric_outlier",
+      "severity": "warning",
+      "sheet": "fact_user_game",
+      "role": "play_hours",
+      "field": "play_hours",
+      "dates": [
+        "1970-01-01"
+      ],
+      "count": 1,
+      "message": "字段存在稳健统计意义上的极端值，需结合业务与数据链路判断。"
+    },
+    {
+      "type": "metric_outlier",
+      "severity": "warning",
+      "sheet": "fact_user_game",
+      "role": "store_match_flag",
+      "field": "store_matched",
+      "dates": [
+        "1970-01-01"
+      ],
+      "count": 1,
+      "message": "字段存在稳健统计意义上的极端值，需结合业务与数据链路判断。"
+    }
+  ],
+  "excluded_dates": [],
+  "policy": {
+    "excluded_dates_are_not_used_for_business_anomaly": true,
+    "ratio_is_recomputed_from_numerator_denominator_when_available": true,
+    "monitored_roles_source": "semantic_contract",
+    "min_sample": 4,
+    "outlier_z": 4.0,
+    "warning_z": 3.0,
+    "missing_rate_floor": 0.05,
+    "delay_exclusion_minutes": 120.0
+  },
+  "summary": {
+    "flag_count": 25,
+    "excluded_date_count": 0,
+    "message": "质量门禁完成；请在语义合同确认字段角色后再升级解释层级。"
+  }
+}

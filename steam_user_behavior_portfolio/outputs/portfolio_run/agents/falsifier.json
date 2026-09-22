@@ -1,0 +1,114 @@
+{
+  "agent": "falsifier",
+  "status": "degraded",
+  "generated_at": "2026-09-22T17:33:34+08:00",
+  "findings": [
+    {
+      "statement": "E002 的两个启动率口径在处理后 user-game 粒度上可复算：128,801 个 purchase pair 中 70,474 个 played，且没有 purchased=0 但 played=1 的 pair，因此 54.72% 的算术本身没有分子越界。",
+      "level": "L0",
+      "evidence_ids": ["E002"],
+      "limitations": ["只验证了处理后表的内部一致性，不能验证原始 purchase 是付费购买、免费领取还是库存拥有。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "“可行动启动率”通过排除全样本从未出现 play 的 11,309 个 purchase pair（占 8.78%），将启动率从 54.72% 抬高到 59.98%（+5.27 个百分点）；但 observed_playable 由同一份 play 结果反向定义，既可能排除 DLC，也可能把真正的零启动游戏排除，存在循环口径。",
+      "level": "L1",
+      "evidence_ids": ["E002"],
+      "limitations": ["没有来自商店或产品字典的“可独立启动/DLC”标记，无法判断被排除的 1,555 个内容名中多少是真正非可玩内容。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "商店元数据只覆盖 48.47% 的 purchase pair 和 46.28% 的游戏；进一步复算显示，匹配组启动率为 64.09%，未匹配组为 45.90%，相差 18.19 个百分点，因此仅在匹配子样本上做的类型、价格或发行特征结论存在明显选择性偏差，不能外推到全量。",
+      "level": "L1",
+      "evidence_ids": ["E005", "E006"],
+      "limitations": ["没有未匹配内容的权威 ID 映射和类型字段，无法检验类型排名在全量中是否反转。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "E005 把 genres 的第一项当作唯一 primary_genre，同时只使用精确名称匹配成功的子样本；因此 Action 占 84.44% 游玩时长可能同时受多标签顺序和匹配覆盖影响，不能解读为用户对 Action 的单一偏好。",
+      "level": "L1",
+      "evidence_ids": ["E005", "E006"],
+      "limitations": ["缺少多标签归因规则、未匹配游戏的类型和用户级偏好暴露数据。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "E004 的分群结果与分群规则存在自证：“大库低启动”本就由库容量≥P75 且启动率<中位数定义，“深度活跃”本就由时长≥P75 且启动率≥中位数定义；在本数据中启动率中位数为 1.0，所以该分群不能作为独立证据说明某种机制导致低启动或高活跃。",
+      "level": "L1",
+      "evidence_ids": ["E004"],
+      "limitations": ["分群没有样本外验证，也没有与后续留存、召回响应或收入指标连接。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "E004 报告的 avg_activation_rate 是用户比率的简单平均，会高权重影响小游戏库用户；例如“常规玩家”的简单平均为 80.60%，按 played_games/library_size 合并分子分母后只有 70.23%，相差 10.36 个百分点；不明示口径时容易高估群体级启动。",
+      "level": "L1",
+      "evidence_ids": ["E002", "E004"],
+      "limitations": ["该差异是聚合权重问题，不表示任一口径必然错误；业务汇报必须先选定用户级或 purchase-pair 级决策对象。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "游玩时长分布极度右偏：正时长 pair 的中位数为 4.5 小时、P99 为 908 小时、最大值为 11,754 小时；将 pair 时长按全量 P99=546 小时截尾后，Top10 游戏时长份额从 58.18% 降至 47.77%。因此平均时长和头部集中度对极端值处理敏感，必须配套中位数/截尾敏感性。",
+      "level": "L1",
+      "evidence_ids": ["E003", "E004"],
+      "limitations": ["没有事件时间或客户端日志，无法区分真实长期累计与挂机/采集异常。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "内容象限只允许 purchase_users≥20 且 observed_playable=1 的 1,091 个游戏进入正式分类，仅占 5,153 个游戏的 21.17%，但覆盖 79.57% 的 purchase pair；这适合头部运营筛选，但不能用来描述长尾内容全景，且 20 的阈值没有统计功效依据。",
+      "level": "L1",
+      "evidence_ids": ["E003"],
+      "limitations": ["22.71% 的游戏只有 1 个 purchase user；未进行置信区间、经验贝叶斯收缩或不同最小样本阈值的稳健性检验。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "707 条完全重复行被无条件 drop_duplicates（占原始 200,000 行的 0.35%）；对 purchase 去重合理，但对 play 行，在没有事件 ID 和时间戳时无法排除“数值相同但事件不同”的合法重复，总时长可能被低估。",
+      "level": "L0",
+      "evidence_ids": ["E001"],
+      "limitations": ["未保留被删除行的行类型分布，因此无法计算对总时长的实际影响上限。"],
+      "confidence": "medium"
+    },
+    {
+      "statement": "名称标准化后存在 63 个重名，脚本按 appid 升序仅保留第一条；这会在同名游戏、重制版、捆绑包或名称符号被移除时把用户行为连到错误的类型、价格和发行日期。",
+      "level": "L0",
+      "evidence_ids": ["E006"],
+      "limitations": ["没有稳定 appid 出现在行为数据中，也没有 63 个冲突的人工核验清单。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "数据没有行为事件时间、观测窗口、曝光/召回触达、对照组或交易金额，商店表也没有 as-of 版本时点；因此当前数据只能支持静态关联与优先级假设，不能验证“召回导致启动”、留存变化、促销 ROI 或收入贡献。",
+      "level": "L0",
+      "evidence_ids": ["E001", "E002", "E006"],
+      "limitations": ["现有 price 是仅在匹配子样本上的商店属性，不是用户实际支付价，也没有币种、折扣、退款或付款时点。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "E004 的证据包将 3,044 人的分群标签写为“收藏型未激活”，但当前 analysis_pipeline.py 和 agg_segment_metrics.csv 中的可复现标签均为“大库低启动”；数字一致但命名不一致，说明证据包存在未记录的人工改名，削弱了端到端可复现性。",
+      "level": "L0",
+      "evidence_ids": ["E004"],
+      "limitations": ["未看到证据包生成后的改名映射或版本记录。"],
+      "confidence": "high"
+    },
+    {
+      "statement": "03_quality.json 把所有记录投影到 1970-01-01，并将 user_id 报为 duplicate_date，同时在 1970-01-01 报 play_hours/store_matched 异常；由于语义合同没有 date_field，这些“日期”警报不是真实时序证据，不能用来证明已做过延迟、断点或时间异常检测。",
+      "level": "L0",
+      "evidence_ids": ["E001"],
+      "limitations": ["质量脚本在无日期数据上的回退逻辑需要单独修正或明示降级。"],
+      "confidence": "high"
+    }
+  ],
+  "conflicts": [
+    "E002 将全样本从未出现 play 的内容视为非可行动分母，但没有独立内容类型证据证明它们都不可独立游玩。",
+    "E004 的分群标签与当前代码及处理后 CSV 不一致：证据包为“收藏型未激活”，可复现输出为“大库低启动”。",
+    "03_quality.json 的 1970-01-01 异常和 duplicate_date 警报与语义合同无 date_field 的事实不兼容，这些警报应从业务时序结论中排除。"
+  ],
+  "missing_data": [
+    "行为事件时间戳、观测起止时间和数据抽取时点",
+    "事件 ID/会话 ID，用于区分真实重复 play 事件与重复入库",
+    "用户行为表中的稳定 appid，以及 63 个标准化重名的人工映射",
+    "内容是否可独立启动、DLC/地图包/捆绑包的权威标记",
+    "商店元数据的 as-of 时点和历史快照，用于避免时点错配",
+    "召回/推荐/促销的曝光、触达、处理组、对照组和响应时间",
+    "真实交易价、币种、折扣、退款、支付时间和交易 ID",
+    "未匹配 51.53% user-game pair 的类型、价格、发行日期和口碑元数据",
+    "召回后的启动、留存、增量时长和增量收入结果指标"
+  ]
+}

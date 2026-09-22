@@ -1,0 +1,88 @@
+{
+  "claims": [
+    {
+      "claim_id": "C001",
+      "statement": "清洗后的静态样本覆盖 12,393 名用户和 5,153 个游戏名；128,801 个拥有 purchase 记录的用户-游戏对中，70,474 个同时观察到正游玩时长。",
+      "level": "L0",
+      "status": "fact",
+      "evidence_ids": ["E001"],
+      "scope": {"grain": "user_id × game_name", "date": null},
+      "confidence": "high",
+      "limitations": ["没有事件时间，不能把静态共现表述为严格的购买后时序转化。"],
+      "identification_strategy": null,
+      "next_test": "补充购买和首次启动时间戳。"
+    },
+    {
+      "claim_id": "C002",
+      "statement": "全量 purchase pair 的正时长静态共现率为 54.715%；若仅保留样本内至少出现过一次 play 的游戏名，共现率为 59.982%，仍有 47,018 个 pair 未观察到正游玩时长。",
+      "level": "L1",
+      "status": "comparison",
+      "evidence_ids": ["E002"],
+      "scope": {"grain": "user_id × game_name", "filter": "observed_playable 灵敏性口径"},
+      "confidence": "high",
+      "limitations": ["observed_playable 是结果变量派生标签，存在循环口径。", "缺少官方 DLC/可独立启动标识。"],
+      "identification_strategy": null,
+      "next_test": "用 appid 对接官方内容类型字典重新计算。"
+    },
+    {
+      "claim_id": "C003",
+      "statement": "按当前样本分位数规则，用户被互斥划分为常规玩家 6,194 人、大库低启动 3,044 人、深度活跃 930 人和轻量用户 2,225 人。",
+      "level": "L0",
+      "status": "fact",
+      "evidence_ids": ["E004"],
+      "scope": {"grain": "user_id", "rule": "sample quantile segmentation"},
+      "confidence": "high",
+      "limitations": ["分层阈值来自当前样本，不是可直接迁移到其他时间或平台的固定标准。"],
+      "identification_strategy": null,
+      "next_test": "在新时间窗口复算阈值和分层稳定性。"
+    },
+    {
+      "claim_id": "C004",
+      "statement": "在当前规则分层中，大库低启动组有 3,044 人，用户级启动率的简单平均为 55.387%，平均累计游玩时长为 778.76 小时。",
+      "level": "L1",
+      "status": "descriptive_segment",
+      "evidence_ids": ["E004"],
+      "scope": {"grain": "user_id", "segment": "大库低启动"},
+      "confidence": "high",
+      "limitations": ["分层变量与描述指标重合，不能作为因果或独立机制证据。", "启动率为用户比率简单平均，不是 pair 级加权率。"],
+      "identification_strategy": null,
+      "next_test": "设计随机召回实验并分层报告增量启动率。"
+    },
+    {
+      "claim_id": "C005",
+      "statement": "在未截尾累计时长口径下，购买榜头部游戏占购买 pair 的 12.092%，时长榜头部游戏占累计游玩时长的 58.180%。",
+      "level": "L1",
+      "status": "distribution_description",
+      "evidence_ids": ["E003"],
+      "scope": {"grain": "game_name", "winsorized": false},
+      "confidence": "high",
+      "limitations": ["购买榜与时长榜不是同一组游戏。", "累计时长高度右偏，未截尾份额对极端值敏感。"],
+      "identification_strategy": null,
+      "next_test": "补充会话级日志并按 P99 截尾、中位数口径做稳健性对照。"
+    },
+    {
+      "claim_id": "C006",
+      "statement": "在仅覆盖 48.466% purchase pair 的精确名称匹配子样本中，Action 的启动率为 66.739%，占该子样本累计游玩时长的 84.438%。",
+      "level": "L1",
+      "status": "matched_sample_description",
+      "evidence_ids": ["E005", "E006"],
+      "scope": {"grain": "matched user-game pair", "dimension": "primary_genre"},
+      "confidence": "high",
+      "limitations": ["未匹配的 51.534% purchase pair 缺少类型信息。", "primary_genre 只取多标签中的第一项。", "匹配子样本不能外推全量。"],
+      "identification_strategy": null,
+      "next_test": "用稳定 appid 补齐全量类型信息并重算多标签类型份额。"
+    },
+    {
+      "claim_id": "C007",
+      "statement": "可将大库低启动组列为召回实验的候选人群，是否优先投入应通过对照实验验证增量启动率和增量游玩时长。",
+      "level": "L3",
+      "status": "decision_recommendation",
+      "evidence_ids": ["E002", "E004"],
+      "scope": {"segment": "大库低启动"},
+      "confidence": "medium",
+      "limitations": ["当前只有静态画像，没有触达与响应数据。", "尚无实验样本量、MDE、实验周期和成本约束。"],
+      "identification_strategy": "随机对照实验或可比对照",
+      "next_test": "先补齐基线启动率、设定 MDE，再随机分流个性化召回。"
+    }
+  ]
+}

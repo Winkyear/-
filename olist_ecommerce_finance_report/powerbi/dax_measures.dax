@@ -1,0 +1,40 @@
+-- Model: orders_analysis (fact) with category/state/payment dimensions as needed.
+
+GMV = SUM(orders_analysis[gmv])
+
+Delivered Orders = DISTINCTCOUNT(orders_analysis[order_id])
+
+Customers = DISTINCTCOUNT(orders_analysis[customer_unique_id])
+
+AOV = DIVIDE([GMV], [Delivered Orders])
+
+Payment Value = SUM(orders_analysis[payment_value])
+
+Freight = SUM(orders_analysis[freight_value])
+
+Freight Share = DIVIDE([Freight], [GMV] + [Freight])
+
+Late Orders = CALCULATE([Delivered Orders], orders_analysis[is_late] = 1)
+
+Late Rate = DIVIDE([Late Orders], [Delivered Orders])
+
+Average Review Score = AVERAGE(orders_analysis[review_score])
+
+Bad Review Orders = CALCULATE([Delivered Orders], orders_analysis[is_bad_review] = 1)
+
+Bad Review Rate = DIVIDE([Bad Review Orders], [Delivered Orders])
+
+Payment Absolute Gap =
+SUMX(orders_analysis, ABS(orders_analysis[payment_value] - orders_analysis[order_value]))
+
+Payment Gap Rate = DIVIDE([Payment Absolute Gap], [Payment Value])
+
+Credit Card Orders =
+CALCULATE([Delivered Orders], orders_analysis[primary_payment_type] = "credit_card")
+
+Credit Card Order Share = DIVIDE([Credit Card Orders], [Delivered Orders])
+
+GMV Previous Month =
+CALCULATE([GMV], DATEADD('Calendar'[Date], -1, MONTH))
+
+GMV MoM = DIVIDE([GMV] - [GMV Previous Month], [GMV Previous Month])

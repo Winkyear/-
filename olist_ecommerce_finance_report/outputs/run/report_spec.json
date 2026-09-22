@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "title": "Olist 电商经营与支付绩效分析",
+    "subtitle": "交易、支付、履约、评价、复购与供给集中度的端到端业务诊断",
+    "decision": "经营优先级复盘",
+    "window": "2017-01 至 2018-08",
+    "source": "Olist public e-commerce dataset",
+    "generated": "2026-09-22",
+    "degraded": {"active": true, "read": "96,211 笔订单", "unread": "0 个文件", "reason": "缺少退款、成本、流量、实验与长期观察窗；GMV 不等于收入，关联不等于因果。"},
+    "quality": {"status": "degraded", "read": 96211, "unread": 0, "reason": "核心汇总与对账一致；经营解释受字段缺失限制。"}
+  },
+  "diversity": {"theme": "slate-amber", "style": "editorial", "motion": "restrained", "density": 6},
+  "kpis": [
+    {"label": "已送达订单", "value": 96211, "raw": 96211},
+    {"label": "GMV", "value": "R$13.18M", "raw": 13181027.13},
+    {"label": "AOV", "value": "R$137.00", "raw": 137.0012486},
+    {"label": "晚到率", "value": "8.13%", "raw": 0.0813072},
+    {"label": "成熟90天复购", "value": "2.28%", "raw": 0.0228469}
+  ],
+  "findings": [
+    {"title": "履约是首要可控风险", "body": "晚到订单平均评分与差评率明显劣于准时订单，应优先建设分层预警和试点；该结果是关联信号，不是因果效应。", "level": "L1", "tone": "negative", "evidence_ids": ["E003"], "limitations": ["未控制地区、卖家、品类和旺季混杂"]},
+    {"title": "信用卡主导订单结构", "body": "信用卡主支付订单占 75.48%，但主支付方式是订单归组标签，不等于真实流水渠道份额。", "level": "L1", "tone": "neutral", "evidence_ids": ["E004"], "limitations": ["混合支付被压缩为单一标签"]},
+    {"title": "复购与供给结构构成中期约束", "body": "成熟 cohort 90 天复购率为 2.28%，同时 531 个卖家累计达到 80% GMV；两者均需叠加更长观察窗和利润/服务数据。", "level": "L1", "tone": "warning", "evidence_ids": ["E005", "E006"], "limitations": ["观察窗截断", "GMV 集中不等于风险集中"]},
+    {"title": "先实验，再扩量", "body": "履约沟通、复购触达和分期提示只能作为实验候选，当前数据不能承诺增量或 ROI。", "level": "L3", "tone": "positive", "evidence_ids": ["E003", "E004", "E005", "E006"], "limitations": ["无实验分组、成本和利润字段"]}
+  ],
+  "background": {"narrative": "项目将 Olist 订单、商品、支付、评价、客户与卖家表连接到统一订单粒度，回答经营规模来自哪里、支付结构如何、履约如何关联体验、复购与供给结构暴露哪些优先级。"},
+  "data_overview": {
+    "narrative": "所有正式结论限定已送达订单与统一窗口；订单、GMV、支付金额均通过独立聚合对账，残差为 0。",
+    "table": {"title": "核心口径", "columns": [{"key":"metric","label":"指标"},{"key":"definition","label":"定义"},{"key":"boundary","label":"边界"}], "rows": [
+      {"metric":"GMV","definition":"商品价格合计，不含运费","boundary":"不是收入或利润"},
+      {"metric":"主支付方式","definition":"每单最大支付记录","boundary":"不是真实 tender 份额"},
+      {"metric":"晚到","definition":"签收晚于预计时间","boundary":"只支持关联"},
+      {"metric":"90天复购","definition":"成熟首购 cohort 加权率","boundary":"受左右截断限制"}
+    ]}
+  },
+  "analysis": [
+    {"heading":"经营规模与订单趋势","narrative":"月度规模随业务爬坡上升，AOV 相对稳定；月度细节用于诊断，不外推为市场趋势。","charts":[
+      {"type":"line","title":"月度 GMV（R$）","caption":"规模增长主要由订单量扩张承载","source":"monthly_performance.csv","data":[{"label":"2017-01","value":111798.36},{"label":"2017-05","value":489338.25},{"label":"2017-09","value":607399.67},{"label":"2017-11","value":987765.37},{"label":"2018-03","value":953356.25},{"label":"2018-05","value":977544.69},{"label":"2018-08","value":838576.64}]},
+      {"type":"bars","title":"月度订单量（单）","caption":"后期订单量维持在约 6,000–7,000 区间","source":"monthly_performance.csv","data":[{"label":"2017-01","value":750},{"label":"2017-05","value":3546},{"label":"2017-09","value":4150},{"label":"2017-11","value":7289},{"label":"2018-03","value":7003},{"label":"2018-05","value":6749},{"label":"2018-08","value":6351}]}
+    ]},
+    {"heading":"支付与分期结构","narrative":"信用卡是主要订单归组方式；长分期与高 AOV 的共变只用于提出实验，不解释为分期拉升客单。","charts":[
+      {"type":"bars","title":"主支付方式订单占比（%）","caption":"信用卡订单归组占比最高","source":"payment_type_performance.csv","data":[{"label":"信用卡","value":75.48},{"label":"Boleto","value":19.89},{"label":"Voucher","value":3.09},{"label":"借记卡","value":1.54}]},
+      {"type":"line","title":"分期区间 AOV（R$）","caption":"长分期对应更高订单金额，但存在明显选择偏差","source":"installment_performance.csv","data":[{"label":"1期","value":82.49},{"label":"2-3期","value":113.64},{"label":"4-5期","value":148.58},{"label":"6-9期","value":218.60},{"label":"10+期","value":372.08}]}
+    ]},
+    {"heading":"履约与客户体验","narrative":"晚到组评价显著更差，且配送超过 21 天后体验快速恶化；后者是探索图，不进入正式 claims。","charts":[
+      {"type":"bars","title":"准时 vs 晚到差评率（%）","caption":"晚到组差评率约为准时组的六倍","source":"delivery_group_performance.csv","data":[{"label":"准时","value":9.17},{"label":"晚到","value":53.98}]},
+      {"type":"line","title":"配送区间平均评分（分）","caption":"长配送区间的平均评分持续下降","source":"delivery_band_performance.csv","data":[{"label":"0-7天","value":4.42},{"label":"8-14天","value":4.31},{"label":"15-21天","value":4.14},{"label":"22-30天","value":3.61},{"label":"31+天","value":2.24}]}
+    ]},
+    {"heading":"品类、区域、客户与供给","narrative":"GMV 向头部品类、SP 州和部分卖家集中；复购偏低使履约问题更值得先治理。","charts":[
+      {"type":"bars","title":"结构集中度（% GMV）","caption":"地区与品类均存在头部集中","source":"state/category performance CSVs","data":[{"label":"SP州","value":38.36},{"label":"Top10品类","value":62.47},{"label":"达到80%的卖家集合","value":80.00}]},
+      {"type":"bars","title":"客户复购率（%）","caption":"成熟 90 天口径低于全窗口重复客户占比","source":"customer_summary.csv + cohort_repeat.csv","data":[{"label":"全窗口重复客户","value":3.00},{"label":"成熟90天复购","value":2.28}]}
+    ]}
+  ],
+  "conclusions": [
+    {"text":"履约风险治理是当前第一优先级；先对高风险州、卖家、品类和路线做预警与分层试点。","evidence_ids":["E003","E006"]},
+    {"text":"支付结构可用于产品分层和对账，但不能把主支付方式、GMV 或支付金额误写为真实流水份额、收入或利润。","evidence_ids":["E001","E004"]},
+    {"text":"复购触达与分期提示应通过随机或可比对照验证，扩量依据是增量复购、体验护栏和成本，而不是静态相关。","evidence_ids":["E003","E004","E005"]}
+  ],
+  "next_steps": [
+    {"question":"晚到治理是否改善体验与复购？","data_needed":"承运商、路线、距离、主动沟通触达、退款和实验分组"},
+    {"question":"分期是否带来增量客单而非高价订单自选择？","data_needed":"促销、价格、商品结构、授信、随机提示实验和毛利"},
+    {"question":"复购率的长期基线是多少？","data_needed":"更早历史订单与 2018-08 之后至少 12 个月观察窗"}
+  ],
+  "appendix": {"notes": ["正式数字只引用 E001-E006。", "月度、配送区间与分期图属于探索性诊断。", "通用质量工具的同日多单不视为订单重复。", "详细口径见 semantic_contract.json，独立复核见 agents/reviewer.json。"]}
+}

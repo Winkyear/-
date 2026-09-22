@@ -1,0 +1,15 @@
+{
+  "decision": "经营会应先投入哪一类数据补齐和运营实验",
+  "backward_steps": [
+    {"step": 1, "question": "支付与订单金额是否可对账", "needed_fields": ["order_value", "payment_value", "order_id"], "available": true, "quality_status": "confirmed", "fallback": "停止金额结论", "max_claim_level": "L1"},
+    {"step": 2, "question": "履约与体验问题集中在哪些订单", "needed_fields": ["estimated_delivery", "delivered_date", "review_score"], "available": true, "quality_status": "confirmed", "fallback": "只报时效分布", "max_claim_level": "L1"},
+    {"step": 3, "question": "支付方式和分期结构如何", "needed_fields": ["payment_type", "installments", "payment_value"], "available": true, "quality_status": "confirmed", "fallback": "只报订单 GMV", "max_claim_level": "L1"},
+    {"step": 4, "question": "复购机会是否稳定", "needed_fields": ["customer_unique_id", "purchase_timestamp", "mature_followup"], "available": true, "quality_status": "inferred", "fallback": "只报全窗口重复客户占比", "max_claim_level": "L1"},
+    {"step": 5, "question": "运费、履约或召回策略能否产生增量价值", "needed_fields": ["exposure", "control", "cost", "refund", "profit"], "available": false, "quality_status": "missing", "fallback": "仅输出实验候选与验收指标", "max_claim_level": "L3"}
+  ],
+  "selected_methods": ["metric_system", "contribution", "mature cohort repeat"],
+  "selected_charts": ["monthly line", "payment bars", "installment bars", "category ranking", "state matrix", "delivery comparison", "delivery band line", "review distribution", "cohort line", "seller concentration"],
+  "contract": {"metric": {"gmv": "item price sum", "repeat_90d": "second order within 90 days among mature cohorts"}, "grain": "order/customer/category/state/seller as labeled", "baseline_or_control": "descriptive monthly and group comparisons", "exclusions": ["non-delivered orders", "boundary months outside 2017-01..2018-08", "immature 90-day cohorts"], "assumptions": ["GMV is not revenue"]},
+  "missing_data": ["refund", "COGS", "platform fee", "traffic", "campaign exposure", "inventory", "experiment assignment"],
+  "stop_conditions": ["do not claim margin, ROI, conversion or causality"]
+}

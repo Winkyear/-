@@ -1,0 +1,21 @@
+{
+  "decision": "确定用户召回与内容激活的优先级。",
+  "primary_method": "segmentation",
+  "secondary_methods": ["contribution"],
+  "dependency_order": ["quality", "segmentation", "contribution"],
+  "reason": "用户粒度行为支持可解释分层，游戏粒度可加总指标支持集中度与内容贡献拆解；缺少时间和实验字段，因此不做留存、异动或因果分析。",
+  "required_fields": [
+    {"role": "entity", "field": "user_id", "status": "available"},
+    {"role": "content", "field": "game_name", "status": "available"},
+    {"role": "behavior", "field": "behavior", "status": "available"},
+    {"role": "value", "field": "value/play_hours", "status": "available"},
+    {"role": "date", "field": "event_time", "status": "missing"}
+  ],
+  "questions": [],
+  "stop_conditions": ["无时间字段时不计算留存与流失", "无处理对照时不使用增量或因果措辞"],
+  "fallback_if_missing": [
+    {"missing": "event_time", "fallback": "横截面用户分层与内容结构分析"},
+    {"missing": "订单金额", "fallback": "使用购买关系数，不报告收入或 LTV"},
+    {"missing": "推荐曝光", "fallback": "提出实验设计，不评估推荐效果"}
+  ]
+}

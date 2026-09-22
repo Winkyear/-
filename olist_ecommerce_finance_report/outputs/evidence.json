@@ -1,0 +1,83 @@
+[
+  {
+    "id": "E001",
+    "metric": "scope",
+    "values": {
+      "window": "2017-01..2018-08",
+      "orders": 96211,
+      "customers": 93104,
+      "gmv": 13181027.13,
+      "payment_value": 15375875.44,
+      "aov": 137.00124860982632
+    },
+    "source": "orders_enriched.csv",
+    "formula": "2017-01 to 2018-08 delivered orders; GMV=sum(item price)",
+    "filters": "order_status=delivered"
+  },
+  {
+    "id": "E002",
+    "metric": "freight",
+    "values": {
+      "freight_total": 2196782.7800000003,
+      "freight_share": 0.14285407303490333,
+      "high_freight_category": "electronics",
+      "high_freight_category_share": 0.22765009349297843
+    },
+    "source": "orders_enriched.csv + order_items_enriched.csv",
+    "formula": "freight/(gmv+freight); high-volume category requires >=500 orders",
+    "filters": "analysis window, delivered"
+  },
+  {
+    "id": "E003",
+    "metric": "delivery_experience",
+    "values": {
+      "late_rate": 0.08130723574108915,
+      "late_review_score": 2.56672760511883,
+      "on_time_review_score": 4.295086194474149,
+      "late_bad_review_rate": 0.5398276312353095,
+      "on_time_bad_review_rate": 0.0916702691633865,
+      "late_gmv": 1158437.67
+    },
+    "source": "delivery_group_performance.csv",
+    "formula": "late if delivered date exceeds estimated date; bad review <=2",
+    "filters": "analysis window, delivered, non-null dates"
+  },
+  {
+    "id": "E004",
+    "metric": "payments",
+    "values": {
+      "credit_card_order_share": 0.7547889534460717,
+      "credit_card_payment_share": 0.7846251686336501,
+      "credit_card_avg_installments": 3.545917735028023,
+      "payment_reconciliation_abs_gap": 7735.710000000182,
+      "payment_reconciliation_gap_rate": 0.0005031069632546517
+    },
+    "source": "payment_type_performance.csv + orders_enriched.csv",
+    "formula": "primary payment type is largest payment record per order; gap=sum(abs(payment-order value))/sum(payment)",
+    "filters": "analysis window, delivered"
+  },
+  {
+    "id": "E005",
+    "metric": "customer_repeat",
+    "values": {
+      "repeat_customer_rate": 0.02995574841037979,
+      "repeat_90d_rate": 0.022846866049423833
+    },
+    "source": "customer_summary.csv + cohort_repeat.csv",
+    "formula": "repeat=second order in analysis window; 90d denominator excludes acquisitions without 90 days follow-up",
+    "filters": "2017-01..2018-08 delivered"
+  },
+  {
+    "id": "E006",
+    "metric": "concentration",
+    "values": {
+      "top_state": "SP",
+      "top_state_gmv_share": 0.3835503166891669,
+      "top10_category_gmv_share": 0.62465433602366,
+      "sellers_for_80pct_gmv": 531
+    },
+    "source": "state/category/seller performance CSVs",
+    "formula": "share of total GMV and cumulative seller GMV",
+    "filters": "analysis window, delivered"
+  }
+]

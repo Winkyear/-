@@ -1,0 +1,8 @@
+{
+  "status": "consistent",
+  "items": [
+    {"id": "R001", "metric": "orders", "left": 96211, "right": 96211, "residual": 0, "verified": true, "source": "orders_analysis vs monthly_performance"},
+    {"id": "R002", "metric": "gmv", "left": 13181027.13, "right": 13181027.13, "residual": 0, "verified": true, "source": "orders_analysis vs monthly_performance"},
+    {"id": "R003", "metric": "payment_value", "left": 15375875.44, "right": 15375875.44, "residual": 0, "verified": true, "source": "orders_analysis vs payment_type_performance"}
+  ]
+}

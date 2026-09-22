@@ -1,0 +1,11 @@
+# 仅将两个对外展示项目纳入本仓库
+ecommerce_project_build/
+olist_ecommerce_portfolio/
+resume_review/
+
+# 本地数据与工具缓存不上传
+**/__pycache__/
+**/.chart-data-*/
+**/.codex-finalizer/
+**/*.inspect.ndjson
+**/*.db

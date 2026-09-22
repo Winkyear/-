@@ -1,0 +1,63 @@
+-- 表名按导入 CSV 后的默认名称编写，可在 Power BI 中按实际表名调整。
+
+用户数 =
+DISTINCTCOUNT(fact_user_game[user_id])
+
+游戏数 =
+DISTINCTCOUNT(fact_user_game[name_key])
+
+拥有关系数 =
+SUM(fact_user_game[purchased])
+
+可独立游玩拥有关系数 =
+SUM(fact_user_game[playable_purchase])
+
+已启动关系数 =
+SUM(fact_user_game[played])
+
+可行动启动率 =
+DIVIDE([已启动关系数], [可独立游玩拥有关系数])
+
+原始启动率 =
+DIVIDE([已启动关系数], [拥有关系数])
+
+待激活关系数 =
+[可独立游玩拥有关系数] - [已启动关系数]
+
+总游玩时长 =
+SUM(fact_user_game[play_hours])
+
+人均游玩时长 =
+DIVIDE([总游玩时长], [用户数])
+
+商店元数据匹配拥有关系数 =
+CALCULATE([拥有关系数], fact_user_game[store_matched] = 1)
+
+商店元数据匹配率 =
+DIVIDE([商店元数据匹配拥有关系数], [拥有关系数])
+
+游戏启动率 =
+DIVIDE(
+    SUM(dim_game_metrics[played_users]),
+    SUM(dim_game_metrics[purchase_users])
+)
+
+Top10游玩时长占比 =
+VAR TopGames =
+    TOPN(
+        10,
+        ALL(dim_game_metrics[game_name]),
+        CALCULATE(SUM(dim_game_metrics[total_play_hours])),
+        DESC
+    )
+RETURN
+    DIVIDE(
+        CALCULATE(SUM(dim_game_metrics[total_play_hours]), KEEPFILTERS(TopGames)),
+        CALCULATE(SUM(dim_game_metrics[total_play_hours]), ALL(dim_game_metrics[game_name]))
+    )
+
+分层用户占比 =
+DIVIDE(
+    DISTINCTCOUNT(dim_user_segments[user_id]),
+    CALCULATE(DISTINCTCOUNT(dim_user_segments[user_id]), ALL(dim_user_segments[segment]))
+)

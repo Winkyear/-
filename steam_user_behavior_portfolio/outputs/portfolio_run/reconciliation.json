@@ -1,0 +1,25 @@
+{
+  "status": "consistent",
+  "entries": [
+    {
+      "id": "R001",
+      "description": "fact_user_game 与 dim_game_metrics 的 purchase_pairs 对账",
+      "table_value": 128801,
+      "detail_value": 128801,
+      "residual": 0,
+      "status": "consistent",
+      "verified": true
+    },
+    {
+      "id": "R002",
+      "description": "fact_user_game 与 dim_game_metrics 的 played_pairs 对账",
+      "table_value": 70474,
+      "detail_value": 70474,
+      "residual": 0,
+      "status": "consistent",
+      "verified": true
+    }
+  ],
+  "skipped": [],
+  "limitations": ["原始文件没有作者提供的合计行，本文件使用两张独立聚合表进行交叉对账"]
+}

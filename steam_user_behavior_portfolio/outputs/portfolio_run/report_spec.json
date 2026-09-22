@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "title": "Steam 用户行为与内容运营诊断",
+    "subtitle": "从 20 万条行为记录到可验证的用户分层与内容优先级；只输出静态关联与待验证决策。",
+    "decision": "游戏运营 · 用户召回与内容推荐",
+    "window": "静态快照（原数据无事件时间）",
+    "source": "和鲸社区 Steam 用户行为数据集 + Steam 商店游戏数据集",
+    "quality": {
+      "flag": "review",
+      "note": "DEGRADED：行为主表可完整读取；商店元数据仅覆盖 48.47% purchase pair，且无事件时间与官方可玩性标识。"
+    },
+    "degraded": {
+      "read": ["完整的用户-游戏 purchase/play 静态记录", "精确名称匹配到的商店子样本"],
+      "unread": ["购买与首次启动时间", "官方 DLC/可独立启动标识", "曝光、触达、收入与对照组"],
+      "reason": "原始行为表无时间字段；商店表与行为表只能依赖标准化名称精确匹配；observed_playable 是样本内派生标签。"
+    }
+  },
+  "diversity": {"theme": "apple-graphite", "style": "apple", "motion": "restrained", "density": 4},
+  "kpis": [
+    {"label": "用户数", "value": 12393, "unit": "", "delta": "静态样本", "direction": "flat"},
+    {"label": "purchase pair", "value": 128801, "unit": "", "delta": "用户×游戏", "direction": "flat"},
+    {"label": "原始共现率", "value": 54.715, "unit": "percent", "delta": "play hours > 0", "direction": "flat"},
+    {"label": "样本筛选共现率", "value": 59.982, "unit": "percent", "delta": "存在循环口径", "direction": "up"}
+  ],
+  "findings": [
+    {
+      "title": "47,018 个样本筛选后的拥有关系未观察到正游玩时长",
+      "body": "全量静态共现率为 54.715%；只保留样本内至少出现过一次 play 的游戏名时为 59.982%。该筛选标签不是官方可玩性分类。",
+      "level": "L1", "tone": "caution", "evidence_ids": ["E002"],
+      "limitations": ["observed_playable 由结果数据派生", "无购买后启动时序"]
+    },
+    {
+      "title": "大库低启动组占 24.562%，适合作为召回实验候选人群",
+      "body": "该组 3,044 人，用户级启动率简单平均 55.387%，平均累计游玩 778.76 小时。这是规则分层画像，不是响应倾向的因果证据。",
+      "level": "L1", "tone": "neutral", "evidence_ids": ["E004"],
+      "limitations": ["分层变量与描述指标重合", "不同于 pair 级加权启动率"]
+    },
+    {
+      "title": "未截尾累计时长高度集中，但对极端值敏感",
+      "body": "时长榜头部游戏占累计游玩时长 58.180%，购买榜头部游戏只占 purchase pair 的 12.092%。两者是并列的分布信号，不构成因果链。",
+      "level": "L1", "tone": "neutral", "evidence_ids": ["E003"],
+      "limitations": ["两个榜单不是同一组游戏", "长期累计时长可能受挂机或异常采集影响"]
+    },
+    {
+      "title": "类型结论只适用于 48.466% 的精确名称匹配子样本",
+      "body": "在该子样本中，Action 启动率为 66.739%，时长份额为 84.438%；该结果不能外推全量类型偏好。",
+      "level": "L1", "tone": "caution", "evidence_ids": ["E005", "E006"],
+      "limitations": ["未匹配子样本可能不同分布", "primary_genre 只取第一标签"]
+    }
+  ],
+  "background": {
+    "narrative": "目标不是做一份泛泛的 EDA，而是回答两个可决策问题：哪些用户值得优先进入召回实验，哪些内容值得进入推荐探索池。由于缺少时间、曝光、交易金额和对照组，所有结论均限定为静态关联、运营优先级或待验证假设。"
+  },
+  "data_overview": {
+    "narrative": "主表为 Steam 200K 用户行为数据，补充表为 Steam 商店游戏快照。原始行为表经字段标准化、707 条完全重复行处理、用户-游戏聚合和名称精确匹配，产出可供 Python、SQL、Excel 与 Power BI 共用的分析集市。",
+    "table": {
+      "title": "数据范围与质量",
+      "columns": [{"key":"item","label":"项目"},{"key":"value","label":"数值"},{"key":"note","label":"口径/限制"}],
+      "rows": [
+        {"item":"原始行为记录","value":"200,000","note":"purchase/play 静态记录"},
+        {"item":"用户","value":"12,393","note":"去识别化 user_id"},
+        {"item":"游戏名","value":"5,153","note":"标准化后聚合"},
+        {"item":"purchase pair","value":"128,801","note":"不等于付费订单"},
+        {"item":"商店匹配覆盖","value":"48.466%","note":"仅精确名称匹配"},
+        {"item":"时间字段","value":"缺失","note":"不做趋势、留存或时序因果"}
+      ],
+      "numeric_columns": []
+    },
+    "notes": ["03_quality.json 中的 1970-01-01 是无日期数据上的工具回退产物，不是业务日期证据。", "707 条完全重复行无事件 ID 可核验，已在限制中披露。"]
+  },
+  "analysis": [
+    {
+      "heading": "口径一：全量共现与样本筛选共现",
+      "charts": [{
+        "type": "bars", "title": "正游玩时长静态共现率",
+        "data": [{"label":"全量 purchase pair","value":54.715,"display":"54.715%"},{"label":"样本筛选口径","value":59.982,"display":"59.982%","tone":"positive"}],
+        "note": "样本筛选口径排除全样本从未出现 play 的游戏名，只作为运营筛选灵敏性分析。", "source": "evidence E002"
+      }]
+    },
+    {
+      "heading": "口径二：用户分层与实验优先级",
+      "charts": [{
+        "type": "bars", "title": "用户分层规模",
+        "data": [{"label":"常规玩家","value":6194},{"label":"大库低启动","value":3044,"tone":"caution"},{"label":"轻量用户","value":2225},{"label":"深度活跃","value":930}],
+        "note": "分层互斥且完备；阈值来自当前样本分位数。", "source": "evidence E004"
+      }]
+    },
+    {
+      "heading": "口径三：内容集中与类型覆盖",
+      "charts": [{
+        "type": "bars", "title": "头部内容份额（未截尾）",
+        "data": [{"label":"购买 pair 份额","value":12.092,"display":"12.092%"},{"label":"累计时长份额","value":58.180,"display":"58.180%","tone":"caution"}],
+        "note": "时长份额对极端值敏感；不解释为未启动存量的原因。", "source": "evidence E003"
+      }]
+    }
+  ],
+  "conclusions": [
+    {"text":"数据支持将 47,018 个样本筛选后的未启动 pair 作为运营诊断信号，但需先用官方内容类型标识替代循环口径。", "evidence_ids":["E002"]},
+    {"text":"大库低启动组适合进入召回实验候选池，但不能由当前静态分层直接断言召回价值。", "evidence_ids":["E004"]},
+    {"text":"累计时长集中与未启动存量同时存在，只是并列信号，不构成因果链。", "evidence_ids":["E002","E003"]},
+    {"text":"类型结论只限精确名称匹配子样本，不得外推全量偏好。", "evidence_ids":["E005","E006"]}
+  ],
+  "next_steps": [
+    {"question":"样本筛选的未启动 pair 中，哪些真的是可独立启动的内容？", "data_needed":"稳定 appid + 官方 DLC/工具/本体游戏标识"},
+    {"question":"大库低启动组对个性化召回是否有增量响应？", "data_needed":"触达时间、随机分流、14 天首次启动与 7 天游玩时长"},
+    {"question":"小众高启动内容获得探索流量后是否扩大有效覆盖？", "data_needed":"推荐曝光、点击、启动、游玩会话与控制组"}
+  ],
+  "appendix": {
+    "tables": [{
+      "title":"证据索引",
+      "columns":[{"key":"id","label":"证据"},{"key":"metric","label":"指标"},{"key":"key_number","label":"关键数值"}],
+      "rows":[
+        {"id":"E001","metric":"数据范围","key_number":"12,393 用户 / 128,801 purchase pair"},
+        {"id":"E002","metric":"静态共现","key_number":"54.715% / 59.982% / 47,018"},
+        {"id":"E003","metric":"内容集中","key_number":"12.092% / 58.180%"},
+        {"id":"E004","metric":"用户分层","key_number":"3,044 大库低启动"},
+        {"id":"E005-E006","metric":"类型与匹配质量","key_number":"48.466% purchase pair 覆盖"}
+      ],
+      "numeric_columns":[]
+    }],
+    "notes": ["所有可发布结论已通过 Locator / Mechanism / Falsifier / Reviewer 独立角色工件门禁。", "da_verify.py 严格模式检查：7 条 claims 全部通过，无未溯源数字。", "本分析不支持 DAU、留存、流失、收入、LTV 或策略增量结论。"]
+  }
+}

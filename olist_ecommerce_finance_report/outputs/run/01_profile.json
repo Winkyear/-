@@ -1,0 +1,849 @@
+{
+  "schema_version": "1.0",
+  "file": {
+    "path": "C:\\Users\\23793\\Documents\\ChatGPT\\简历\\olist_ecommerce_finance_report\\data\\processed\\orders_enriched.csv",
+    "name": "orders_enriched.csv",
+    "suffix": ".csv",
+    "size_bytes": 38337358,
+    "sha256": "d739423ad3f05bba700d8982b66a6abd5fcedd85c5270a934754ca5d189a8837"
+  },
+  "main_table": "orders_enriched",
+  "sheets": [
+    {
+      "name": "orders_enriched",
+      "rows": 99441,
+      "columns": 32,
+      "header_row_zero_based": 0,
+      "header_status": "detected",
+      "date_field": "order_purchase_timestamp",
+      "roles": {
+        "date": [
+          "order_purchase_timestamp",
+          "order_delivered_carrier_date",
+          "order_delivered_customer_date",
+          "order_estimated_delivery_date",
+          "review_creation_date",
+          "purchase_date",
+          "delivery_days",
+          "late_days"
+        ],
+        "browse": [
+          "review_score",
+          "review_records",
+          "review_creation_date",
+          "is_bad_review"
+        ],
+        "region": [
+          "customer_city"
+        ]
+      },
+      "fields": [
+        {
+          "name": "order_id",
+          "dtype": "str",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 99441,
+          "sample_values": [
+            "e481f51cbdc54678b7cc49136f2d6af7",
+            "53cdb2fc8bc7dce0b6741e2150273451",
+            "47770eb9100c2d0c44946d9cf07ec65d",
+            "949d5b44dbf5de918fe9c16f97b45f8a",
+            "ad21c59c0840e6cb83a9ceb5573f8159"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": false
+        },
+        {
+          "name": "customer_id",
+          "dtype": "str",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 99441,
+          "sample_values": [
+            "9ef432eb6251297304e76186b10a928d",
+            "b0830fb4747a6c6d20dea0b8c802d7ef",
+            "41ce2a54c0b03bf3443c3d931a367089",
+            "f88197465ea7920adcdbec7375364d82",
+            "8ab97904e6daea8866dbdbc4fb7aad2c"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": false
+        },
+        {
+          "name": "order_status",
+          "dtype": "str",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 8,
+          "sample_values": [
+            "delivered",
+            "delivered",
+            "delivered",
+            "delivered",
+            "delivered"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": false
+        },
+        {
+          "name": "order_purchase_timestamp",
+          "dtype": "str",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 98875,
+          "sample_values": [
+            "2017-10-02 10:56:33",
+            "2018-07-24 20:41:37",
+            "2018-08-08 08:38:49",
+            "2017-11-18 19:28:06",
+            "2018-02-13 21:18:39"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": true,
+          "date_range": {
+            "min": "2016-09-04T21:15:19",
+            "max": "2018-10-17T17:30:18",
+            "unique_days": 634
+          }
+        },
+        {
+          "name": "order_approved_at",
+          "dtype": "str",
+          "missing_count": 160,
+          "missing_rate": 0.0016089942780140988,
+          "unique_count": 90733,
+          "sample_values": [
+            "2017-10-02 11:07:15",
+            "2018-07-26 03:24:27",
+            "2018-08-08 08:55:23",
+            "2017-11-18 19:45:59",
+            "2018-02-13 22:20:29"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": true,
+          "date_range": {
+            "min": "2016-09-15T12:16:38",
+            "max": "2018-09-03T17:40:06",
+            "unique_days": 611
+          }
+        },
+        {
+          "name": "order_delivered_carrier_date",
+          "dtype": "str",
+          "missing_count": 1783,
+          "missing_rate": 0.017930229985619613,
+          "unique_count": 81018,
+          "sample_values": [
+            "2017-10-04 19:55:00",
+            "2018-07-26 14:31:00",
+            "2018-08-08 13:50:00",
+            "2017-11-22 13:39:59",
+            "2018-02-14 19:46:34"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": true,
+          "date_range": {
+            "min": "2016-10-08T10:34:01",
+            "max": "2018-09-11T19:48:28",
+            "unique_days": 547
+          }
+        },
+        {
+          "name": "order_delivered_customer_date",
+          "dtype": "str",
+          "missing_count": 2965,
+          "missing_rate": 0.02981667521444877,
+          "unique_count": 95664,
+          "sample_values": [
+            "2017-10-10 21:25:13",
+            "2018-08-07 15:27:45",
+            "2018-08-17 18:06:29",
+            "2017-12-02 00:28:42",
+            "2018-02-16 18:17:02"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": true,
+          "date_range": {
+            "min": "2016-10-11T13:46:32",
+            "max": "2018-10-17T13:22:46",
+            "unique_days": 645
+          }
+        },
+        {
+          "name": "order_estimated_delivery_date",
+          "dtype": "str",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 459,
+          "sample_values": [
+            "2017-10-18",
+            "2018-08-13",
+            "2018-09-04",
+            "2017-12-15",
+            "2018-02-26"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": true,
+          "date_range": {
+            "min": "2016-09-30T00:00:00",
+            "max": "2018-11-12T00:00:00",
+            "unique_days": 459
+          }
+        },
+        {
+          "name": "customer_unique_id",
+          "dtype": "str",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 96096,
+          "sample_values": [
+            "7c396fd4830fd04220f754e42b4e5bff",
+            "af07308b275d755c9edb36a90c618231",
+            "3a653a41f6f9fc3d2a113cf8398680e8",
+            "7c142cf63193a1473d2e66489a9ae977",
+            "72632f0f9dd73dfee390c9b22eb56dd6"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": false
+        },
+        {
+          "name": "customer_zip_code_prefix",
+          "dtype": "int64",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 14995,
+          "sample_values": [
+            3149,
+            47813,
+            75265,
+            59296,
+            9195
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 1003.0,
+            "max": 99990.0,
+            "median": 24416.0,
+            "mad": 16386.0,
+            "mean": 35137.474180669946,
+            "std": 29797.93928763635,
+            "n": 99441
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00.000001003",
+            "max": "1970-01-01T00:00:00.000099990",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "customer_city",
+          "dtype": "str",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 4119,
+          "sample_values": [
+            "sao paulo",
+            "barreiras",
+            "vianopolis",
+            "sao goncalo do amarante",
+            "santo andre"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": false
+        },
+        {
+          "name": "customer_state",
+          "dtype": "str",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 27,
+          "sample_values": [
+            "SP",
+            "BA",
+            "GO",
+            "RN",
+            "SP"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": false
+        },
+        {
+          "name": "item_count",
+          "dtype": "float64",
+          "missing_count": 775,
+          "missing_rate": 0.007793566034130791,
+          "unique_count": 17,
+          "sample_values": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 1.0,
+            "max": 21.0,
+            "median": 1.0,
+            "mad": 0.0,
+            "mean": 1.1417306873695092,
+            "std": 0.5384523739205161,
+            "n": 98666
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00.000000001",
+            "max": "1970-01-01T00:00:00.000000021",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "seller_count",
+          "dtype": "float64",
+          "missing_count": 775,
+          "missing_rate": 0.007793566034130791,
+          "unique_count": 5,
+          "sample_values": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 1.0,
+            "max": 5.0,
+            "median": 1.0,
+            "mad": 0.0,
+            "mean": 1.0136217136602275,
+            "std": 0.12229715739850648,
+            "n": 98666
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00.000000001",
+            "max": "1970-01-01T00:00:00.000000005",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "gmv",
+          "dtype": "float64",
+          "missing_count": 775,
+          "missing_rate": 0.007793566034130791,
+          "unique_count": 7621,
+          "sample_values": [
+            29.99,
+            118.7,
+            159.9,
+            45.0,
+            19.9
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 0.85,
+            "max": 13440.0,
+            "median": 86.9,
+            "mad": 47.900000000000006,
+            "mean": 137.75407637889447,
+            "std": 210.64514531166347,
+            "n": 98666
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00",
+            "max": "1970-01-01T00:00:00.000013440",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "freight_value",
+          "dtype": "float64",
+          "missing_count": 775,
+          "missing_rate": 0.007793566034130791,
+          "unique_count": 7712,
+          "sample_values": [
+            8.72,
+            22.76,
+            19.22,
+            27.2,
+            8.72
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 0.0,
+            "max": 1794.96,
+            "median": 17.18,
+            "mad": 4.390000000000001,
+            "mean": 22.871094804694632,
+            "std": 21.825134834013568,
+            "n": 98666
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00",
+            "max": "1970-01-01T00:00:00.000001794",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "order_value",
+          "dtype": "float64",
+          "missing_count": 775,
+          "missing_rate": 0.007793566034130791,
+          "unique_count": 28943,
+          "sample_values": [
+            38.71,
+            141.46,
+            179.12,
+            72.2,
+            28.62
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 9.59,
+            "max": 13664.08,
+            "median": 105.29,
+            "mad": 51.63000000000001,
+            "mean": 160.6251711835891,
+            "std": 220.49345753264848,
+            "n": 98666
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00.000000009",
+            "max": "1970-01-01T00:00:00.000013664",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "payment_value",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_rate": 1.0056214237588117e-05,
+          "unique_count": 27704,
+          "sample_values": [
+            38.71,
+            141.46,
+            179.12,
+            72.2,
+            28.62
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 0.0,
+            "max": 13664.08,
+            "median": 105.29,
+            "mad": 51.61000000000001,
+            "mean": 160.9902666934835,
+            "std": 221.95125661325898,
+            "n": 99440
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00",
+            "max": "1970-01-01T00:00:00.000013664",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "payment_records",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_rate": 1.0056214237588117e-05,
+          "unique_count": 20,
+          "sample_values": [
+            3.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 1.0,
+            "max": 29.0,
+            "median": 1.0,
+            "mad": 0.0,
+            "mean": 1.0447103781174578,
+            "std": 0.38116563065686343,
+            "n": 99440
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00.000000001",
+            "max": "1970-01-01T00:00:00.000000029",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "max_installments",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_rate": 1.0056214237588117e-05,
+          "unique_count": 24,
+          "sample_values": [
+            1.0,
+            1.0,
+            3.0,
+            1.0,
+            1.0
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 0.0,
+            "max": 24.0,
+            "median": 2.0,
+            "mad": 1.0,
+            "mean": 2.9307924376508447,
+            "std": 2.71594152992092,
+            "n": 99440
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00",
+            "max": "1970-01-01T00:00:00.000000024",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "primary_payment_type",
+          "dtype": "str",
+          "missing_count": 1,
+          "missing_rate": 1.0056214237588117e-05,
+          "unique_count": 5,
+          "sample_values": [
+            "voucher",
+            "boleto",
+            "credit_card",
+            "credit_card",
+            "credit_card"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": false
+        },
+        {
+          "name": "review_score",
+          "dtype": "float64",
+          "missing_count": 768,
+          "missing_rate": 0.0077231725344676745,
+          "unique_count": 11,
+          "sample_values": [
+            4.0,
+            4.0,
+            5.0,
+            5.0,
+            5.0
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 1.0,
+            "max": 5.0,
+            "median": 5.0,
+            "mad": 0.0,
+            "mean": 4.086793415287532,
+            "std": 1.346274235114408,
+            "n": 98673
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00.000000001",
+            "max": "1970-01-01T00:00:00.000000005",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "review_records",
+          "dtype": "float64",
+          "missing_count": 768,
+          "missing_rate": 0.0077231725344676745,
+          "unique_count": 3,
+          "sample_values": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 1.0,
+            "max": 3.0,
+            "median": 1.0,
+            "mad": 0.0,
+            "mean": 1.0055841010205426,
+            "std": 0.07506032115194175,
+            "n": 98673
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00.000000001",
+            "max": "1970-01-01T00:00:00.000000003",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "review_creation_date",
+          "dtype": "str",
+          "missing_count": 768,
+          "missing_rate": 0.0077231725344676745,
+          "unique_count": 1170,
+          "sample_values": [
+            "2017-10-11 00:00:00",
+            "2018-08-08 00:00:00",
+            "2018-08-18 00:00:00",
+            "2017-12-03 00:00:00",
+            "2018-02-17 00:00:00"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": true,
+          "date_range": {
+            "min": "2016-10-02T00:00:00",
+            "max": "2018-08-31T00:00:00",
+            "unique_days": 636
+          }
+        },
+        {
+          "name": "purchase_date",
+          "dtype": "str",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 634,
+          "sample_values": [
+            "2017-10-02",
+            "2018-07-24",
+            "2018-08-08",
+            "2017-11-18",
+            "2018-02-13"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": true,
+          "date_range": {
+            "min": "2016-09-04T00:00:00",
+            "max": "2018-10-17T00:00:00",
+            "unique_days": 634
+          }
+        },
+        {
+          "name": "purchase_month",
+          "dtype": "str",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 25,
+          "sample_values": [
+            "2017-10",
+            "2018-07",
+            "2018-08",
+            "2017-11",
+            "2018-02"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": true,
+          "date_range": {
+            "min": "2016-09-01T00:00:00",
+            "max": "2018-10-01T00:00:00",
+            "unique_days": 25
+          }
+        },
+        {
+          "name": "delivery_days",
+          "dtype": "float64",
+          "missing_count": 2965,
+          "missing_rate": 0.02981667521444877,
+          "unique_count": 93809,
+          "sample_values": [
+            8.436574074074073,
+            13.782037037037036,
+            9.394212962962962,
+            13.20875,
+            2.873877314814815
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 0.5334143518518518,
+            "max": 209.6286111111111,
+            "median": 10.21775462962963,
+            "mad": 4.143784722222222,
+            "mean": 12.558702304032053,
+            "std": 9.546529874135482,
+            "n": 96476
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00",
+            "max": "1970-01-01T00:00:00.000000209",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "late_days",
+          "dtype": "float64",
+          "missing_count": 2965,
+          "missing_rate": 0.02981667521444877,
+          "unique_count": 91915,
+          "sample_values": [
+            -7.107488425925926,
+            -5.355729166666666,
+            -17.245497685185185,
+            -12.980069444444444,
+            -9.238171296296295
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": -146.0161226851852,
+            "max": 188.97508101851847,
+            "median": -11.948940972222221,
+            "mad": 4.85839699074074,
+            "mean": -11.17911987981947,
+            "std": 10.18611321741384,
+            "n": 96476
+          },
+          "date_range": {
+            "min": "1969-12-31T23:59:59.999999854",
+            "max": "1970-01-01T00:00:00.000000188",
+            "unique_days": 2
+          }
+        },
+        {
+          "name": "is_late",
+          "dtype": "float64",
+          "missing_count": 2965,
+          "missing_rate": 0.02981667521444877,
+          "unique_count": 2,
+          "sample_values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 0.0,
+            "max": 1.0,
+            "median": 0.0,
+            "mad": 0.0,
+            "mean": 0.08112898544715784,
+            "std": 0.27303451407502777,
+            "n": 96476
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00",
+            "max": "1970-01-01T00:00:00.000000001",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "is_bad_review",
+          "dtype": "float64",
+          "missing_count": 768,
+          "missing_rate": 0.0077231725344676745,
+          "unique_count": 2,
+          "sample_values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 0.0,
+            "max": 1.0,
+            "median": 0.0,
+            "mad": 0.0,
+            "mean": 0.14643316814123417,
+            "std": 0.35354174030295926,
+            "n": 98673
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00",
+            "max": "1970-01-01T00:00:00.000000001",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "is_delivered",
+          "dtype": "int64",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 2,
+          "sample_values": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 0.0,
+            "max": 1.0,
+            "median": 1.0,
+            "mad": 0.0,
+            "mean": 0.9702034372140264,
+            "std": 0.1700265224822205,
+            "n": 99441
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00",
+            "max": "1970-01-01T00:00:00.000000001",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "freight_share",
+          "dtype": "float64",
+          "missing_count": 775,
+          "missing_rate": 0.007793566034130791,
+          "unique_count": 44228,
+          "sample_values": [
+            0.2252647894600878,
+            0.1608935388095574,
+            0.1073023671281822,
+            0.3767313019390581,
+            0.3046820405310972
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 0.0,
+            "max": 0.9554507337526204,
+            "median": 0.1832560676302154,
+            "mad": 0.07606263721185255,
+            "mean": 0.2089729034767577,
+            "std": 0.12591637779690057,
+            "n": 98666
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00",
+            "max": "1970-01-01T00:00:00",
+            "unique_days": 1
+          }
+        }
+      ],
+      "duplicate_rows": 0,
+      "source_ref": {
+        "sheet": "orders_enriched",
+        "header_row": 1
+      },
+      "date_range": {
+        "min": "2016-09-04T00:00:00",
+        "max": "2018-10-17T00:00:00",
+        "unique_days": 634,
+        "missing_days_in_span": 140
+      }
+    }
+  ],
+  "notes": [
+    "字段角色是基于名称和类型的候选识别，必须在语义合同中确认。",
+    "画像不包含业务判断，所有异常结论需要进入后续计算步骤。"
+  ]
+}

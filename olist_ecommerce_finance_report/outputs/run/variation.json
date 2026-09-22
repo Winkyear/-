@@ -1,0 +1,17 @@
+{
+  "signature": {
+    "primary_view": "opportunity",
+    "visual_structure": "layered-disclosure",
+    "chart_grammar": ["trend", "distribution", "matrix", "concentration"],
+    "density": 6,
+    "recommendation_form": "decision-tree-and-experiment"
+  },
+  "previous_signature": {
+    "primary_view": "decision",
+    "visual_structure": "pyramid",
+    "chart_grammar": ["baseline-overlay", "distribution", "matrix"],
+    "density": 4,
+    "recommendation_form": "experiment-design"
+  },
+  "diff_from_previous": "本次从电商经营与支付结构机会切入，用多图层层展开；增加付款、分期、履约、评价、同期群和集中度视角。"
+}

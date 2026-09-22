@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Olist 电商经营与支付绩效分析</title>
+<style>
+:root {
+  --bg:#f7f8fa; --surface:#ffffff; --surface-alt:#f1f2f5;
+  --border:#e3e5ea; --ink:#14161a; --ink-soft:#454a54;
+  --muted:#787f8c; --accent:#b45309; --accent-soft:#fdf3e7;
+  --pos:#0f766e; --neg:#b91c1c;
+  --radius:6px; --radius-sm:6px;
+  --measure:72ch; --gap:48px;
+}
+* { box-sizing:border-box; }
+html { background:var(--bg); }
+body {
+  margin:0 auto; max-width:1180px; padding:56px 40px 96px;
+  background:var(--bg); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size:16px; line-height:1.78; letter-spacing:-0.02em;
+  -webkit-font-smoothing:antialiased; font-variant-numeric:tabular-nums;
+}
+h1,h2,h3 { margin:0; font-weight:600; text-wrap:balance; }
+h1 { font-size:clamp(1.75rem,3.4vw,2.5rem); line-height:1.08; letter-spacing:-0.031em; }
+h2 { font-size:clamp(1.2rem,2vw,1.5rem); line-height:1.14; letter-spacing:-0.026em; }
+h3 { font-size:1.02rem; line-height:1.3; letter-spacing:-0.01em; }
+p { margin:14px 0; max-width:var(--measure); color:var(--ink-soft); text-wrap:pretty; }
+b { color:var(--ink); font-weight:600; }
+.masthead { padding-bottom:26px; border-bottom:1px solid var(--border); }
+.eyebrow { margin:0 0 12px; font-size:.82rem; letter-spacing:.01em; color:var(--muted); font-weight:500; }
+.subtitle { margin:16px 0 0; font-size:1.22rem; line-height:1.42; color:var(--ink-soft); max-width:62ch; }
+.meta-row { display:flex; flex-wrap:wrap; gap:8px 34px; margin-top:26px; align-items:center; }
+.meta-item { font-size:.86rem; color:var(--ink-soft); }
+.meta-item b { display:block; font-size:.72rem; letter-spacing:.04em; color:var(--muted); font-weight:500; }
+.degraded { margin:22px 0 0; padding:16px 20px; border-radius:var(--radius-sm); background:var(--surface-alt);
+  border:1px solid var(--border); font-size:.88rem; color:var(--ink-soft); display:flex; flex-wrap:wrap; gap:8px 20px; align-items:baseline; }
+.degraded strong { color:var(--neg); font-size:.76rem; letter-spacing:.1em; }
+.deg-reason { color:var(--ink); }
+.toc { display:flex; flex-wrap:wrap; gap:22px; padding:14px 0; border-bottom:1px solid var(--border);
+  font-size:.84rem; position:sticky; top:0; background:color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter:saturate(180%) blur(20px); z-index:5; }
+.toc a { color:var(--muted); text-decoration:none; transition:color .2s ease; }
+.toc a:hover { color:var(--ink); }
+.block { padding-top:var(--gap); }
+.block + .block { border-top:1px solid var(--border); }
+.block h2 { margin-bottom:24px; }
+.kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px; margin-bottom:30px; }
+.kpi { background:var(--surface-alt); border-radius:var(--radius); padding:22px 24px; }
+.kpi-label { display:block; font-size:.8rem; color:var(--muted); }
+.kpi-value { display:block; font-size:1.5rem; font-weight:600; letter-spacing:-0.024em; margin-top:8px; }
+.kpi-delta { display:inline-block; margin-top:8px; font-size:.84rem; color:var(--muted); }
+.kpi-delta.pos { color:var(--pos); }
+.kpi-delta.neg { color:var(--neg); }
+.finding { position:relative; background:#ffffff;
+  border:1px solid #e3e5ea;
+  border-radius:var(--radius); padding:16px 20px; margin-bottom:12px; overflow:hidden; }
+.finding .rule { position:absolute; left:0; top:0; bottom:0; width:3px; }
+.finding h3 { margin-bottom:8px; }
+.finding-body { margin:0; }
+.chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.chip { font-size:.76rem; padding:4px 11px; border-radius:999px; color:var(--muted); background:var(--surface); }
+.finding .chip { background:color-mix(in srgb, var(--surface) 70%, transparent); }
+.chip-level { color:var(--accent); }
+.chip-limit { color:var(--ink-soft); }
+.chip-warn { color:var(--neg); background:transparent; border:1px solid var(--neg); }
+.analysis-block { margin-bottom:38px; }
+.analysis-block h3 { margin-bottom:12px; }
+figure.chart { margin:26px 0 30px; }
+figure.chart figcaption { font-size:.92rem; font-weight:500; color:var(--ink-soft); margin-bottom:14px; }
+.chart-title { display:block; font-size:.95rem; font-weight:600; color:var(--ink); margin-bottom:3px; }
+.chart-caption { display:block; }
+.chart-svg { width:100%; height:auto; display:block; overflow:visible; }
+.svg-label { font-size:12.5px; fill:var(--ink-soft); font-weight:500; }
+.svg-value { font-size:12.5px; fill:var(--ink); font-weight:600; }
+.svg-value-in { font-size:12.5px; fill:#fff; font-weight:600; }
+.svg-axis { font-size:11px; fill:var(--muted); }
+.svg-note { font-size:11px; fill:var(--muted); }
+/* 图表标注压到折线/网格上时，用底色描边留出光晕，保证仍然读得清 */
+.svg-value, .svg-note { paint-order:stroke fill; stroke:var(--surface); stroke-width:3px; stroke-linejoin:round; }
+.chart-note { font-size:.8rem; color:var(--muted); margin:12px 0 0; }
+.chart-source { font-size:.76rem; color:var(--muted); margin:4px 0 0; }
+table.data { width:100%; border-collapse:collapse; margin:20px 0; font-size:.88rem; }
+table.data caption { text-align:left; font-size:.88rem; font-weight:500; color:var(--ink-soft); padding-bottom:10px; }
+table.data th, table.data td { text-align:left; padding:12px 14px 12px 0; border-bottom:1px solid var(--border); }
+table.data th { font-size:.76rem; letter-spacing:.02em; color:var(--muted); font-weight:500; }
+table.data td.num, table.data th.num { text-align:right; font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; padding-left:16px; }
+.conclusions { list-style:none; padding:0; margin:0; }
+.conclusion { padding:16px 0; border-bottom:1px solid var(--border); display:flex; flex-wrap:wrap; gap:10px; align-items:baseline; }
+.conclusion-text { flex:1 1 360px; color:var(--ink); }
+.steps-title { margin:30px 0 14px; }
+.steps { list-style:none; padding:0; margin:0; display:grid; gap:10px; }
+.step { background:var(--surface-alt); border-radius:var(--radius-sm); padding:16px 20px; }
+.step-q { display:block; color:var(--ink); }
+.step-need { display:block; margin-top:6px; font-size:.84rem; color:var(--muted); }
+.aside { font-size:.86rem; color:var(--muted); }
+.empty { color:var(--muted); font-size:.86rem; }
+footer.colophon { margin-top:56px; padding-top:20px; border-top:1px solid var(--border); font-size:.78rem; color:var(--muted); }
+@media (max-width:720px) {
+  body { padding:40px 20px 64px; }
+  .subtitle { font-size:1.06rem; }
+}
+@media print {
+  body { max-width:none; padding:0; }
+  .toc { display:none; }
+  .block, figure.chart, table.data, .finding, .kpi-grid { break-inside:avoid; }
+}
+@media (prefers-reduced-motion:reduce) { * { animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+<div class="degraded" role="status"><strong>DEGRADED</strong><span class="deg-reason">缺少退款、成本、流量、实验与长期观察窗；GMV 不等于收入，关联不等于因果。</span><span class="deg-scope">已读：96,211 笔订单　未读：0 个文件</span></div>
+<header class="masthead"><p class="eyebrow">经营优先级复盘</p><h1>Olist 电商经营与支付绩效分析</h1><p class="subtitle">交易、支付、履约、评价、复购与供给集中度的端到端业务诊断</p><div class="meta-row"><span class="meta-item"><b>观察窗</b>2017-01 至 2018-08</span><span class="meta-item"><b>来源</b>Olist public e-commerce dataset</span><span class="meta-item"><b>结论分级</b>L0–L4</span></div></header>
+<nav class="toc"><a href="#s1">核心发现</a><a href="#s2">分析背景与目标</a><a href="#s3">数据概况</a><a href="#s4">深入分析</a><a href="#s5">结论与建议</a><a href="#s6">附录</a></nav>
+<main>
+<section class="block" id="s1"><h2>核心发现</h2><div class="kpi-grid"><div class="kpi"><span class="kpi-label">已送达订单</span><span class="kpi-value">96,211</span></div><div class="kpi"><span class="kpi-label">GMV</span><span class="kpi-value">R$13.18M</span></div><div class="kpi"><span class="kpi-label">AOV</span><span class="kpi-value">R$137.00</span></div><div class="kpi"><span class="kpi-label">晚到率</span><span class="kpi-value">8.13%</span></div><div class="kpi"><span class="kpi-label">成熟90天复购</span><span class="kpi-value">2.28%</span></div></div><article class="finding"><span class="rule" style="background:#b91c1c"></span><h3>履约是首要可控风险</h3><p class="finding-body">晚到订单平均评分与差评率明显劣于准时订单，应优先建设分层预警和试点；该结果是关联信号，不是因果效应。</p><div class="chips"><span class="chip">证据 E003</span><span class="chip chip-level">L1 比较</span><span class="chip chip-limit">限制：未控制地区、卖家、品类和旺季混杂</span></div></article><article class="finding"><span class="rule" style="background:#e3e5ea"></span><h3>信用卡主导订单结构</h3><p class="finding-body">信用卡主支付订单占 75.48%，但主支付方式是订单归组标签，不等于真实流水渠道份额。</p><div class="chips"><span class="chip">证据 E004</span><span class="chip chip-level">L1 比较</span><span class="chip chip-limit">限制：混合支付被压缩为单一标签</span></div></article><article class="finding"><span class="rule" style="background:#e3e5ea"></span><h3>复购与供给结构构成中期约束</h3><p class="finding-body">成熟 cohort 90 天复购率为 2.28%，同时 531 个卖家累计达到 80% GMV；两者均需叠加更长观察窗和利润/服务数据。</p><div class="chips"><span class="chip">证据 E005</span><span class="chip">证据 E006</span><span class="chip chip-level">L1 比较</span><span class="chip chip-limit">限制：观察窗截断</span><span class="chip chip-limit">限制：GMV 集中不等于风险集中</span></div></article><article class="finding"><span class="rule" style="background:#0f766e"></span><h3>先实验，再扩量</h3><p class="finding-body">履约沟通、复购触达和分期提示只能作为实验候选，当前数据不能承诺增量或 ROI。</p><div class="chips"><span class="chip">证据 E003</span><span class="chip">证据 E004</span><span class="chip">证据 E005</span><span class="chip">证据 E006</span><span class="chip chip-level">L3 决策含义</span><span class="chip chip-limit">限制：无实验分组、成本和利润字段</span></div></article></section><section class="block" id="s2"><h2>分析背景与目标</h2><p>项目将 Olist 订单、商品、支付、评价、客户与卖家表连接到统一订单粒度，回答经营规模来自哪里、支付结构如何、履约如何关联体验、复购与供给结构暴露哪些优先级。</p></section><section class="block" id="s3"><h2>数据概况</h2><p>所有正式结论限定已送达订单与统一窗口；订单、GMV、支付金额均通过独立聚合对账，残差为 0。</p><table class="data"><caption>核心口径</caption><thead><tr><th class="">指标</th><th class="">定义</th><th class="">边界</th></tr></thead><tbody><tr><td class="">GMV</td><td class="">商品价格合计，不含运费</td><td class="">不是收入或利润</td></tr><tr><td class="">主支付方式</td><td class="">每单最大支付记录</td><td class="">不是真实 tender 份额</td></tr><tr><td class="">晚到</td><td class="">签收晚于预计时间</td><td class="">只支持关联</td></tr><tr><td class="">90天复购</td><td class="">成熟首购 cohort 加权率</td><td class="">受左右截断限制</td></tr></tbody></table></section><section class="block" id="s4"><h2>深入分析</h2><div class="analysis-block"><h3>经营规模与订单趋势</h3><p>月度规模随业务爬坡上升，AOV 相对稳定；月度细节用于诊断，不外推为市场趋势。</p><figure class="chart"><figcaption><span class="chart-title">月度 GMV（R$）</span><span class="chart-caption">规模增长主要由订单量扩张承载</span></figcaption><svg class="chart-svg" viewBox="0 0 720 230" role="img" aria-label="月度 GMV（R$）"><line x1="52" y1="198.0" x2="704" y2="198.0" stroke="#e3e5ea" stroke-width="1" opacity="0.5"/><text x="42" y="202.0" text-anchor="end" class="svg-axis">-10,837</text><line x1="52" y1="108.0" x2="704" y2="108.0" stroke="#e3e5ea" stroke-width="1" opacity="0.5"/><text x="42" y="112.0" text-anchor="end" class="svg-axis">549,782</text><line x1="52" y1="18.0" x2="704" y2="18.0" stroke="#e3e5ea" stroke-width="1" opacity="0.5"/><text x="42" y="22.0" text-anchor="end" class="svg-axis">1,110,401</text><line x1="52" y1="198" x2="704" y2="198" stroke="#e3e5ea" stroke-width="1"/><path d="M52.0,178.3 L160.7,117.7 L269.3,98.8 L378.0,37.7 L486.7,43.2 L595.3,39.3 L704.0,61.6 L704.0,198.0 L52.0,198.0 Z" fill="#b45309" opacity="0.06"/><path d="M52.0,178.3 L160.7,117.7 L269.3,98.8 L378.0,37.7 L486.7,43.2 L595.3,39.3 L704.0,61.6" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle class="pop" cx="52.0" cy="178.3" r="3" fill="#f7f8fa" stroke="#b45309" stroke-width="1.8"/><text x="52.0" y="168.3" text-anchor="start" class="svg-value">111,798.36</text><text x="52.0" y="220" text-anchor="start" class="svg-axis">2017-01</text><circle class="pop" cx="160.7" cy="117.7" r="3" fill="#f7f8fa" stroke="#b45309" stroke-width="1.8"/><circle class="pop" cx="269.3" cy="98.8" r="3" fill="#f7f8fa" stroke="#b45309" stroke-width="1.8"/><circle class="pop" cx="378.0" cy="37.7" r="3" fill="#f7f8fa" stroke="#b45309" stroke-width="1.8"/><circle class="pop" cx="486.7" cy="43.2" r="3" fill="#f7f8fa" stroke="#b45309" stroke-width="1.8"/><circle class="pop" cx="595.3" cy="39.3" r="3" fill="#f7f8fa" stroke="#b45309" stroke-width="1.8"/><circle class="pop" cx="704.0" cy="61.6" r="3" fill="#f7f8fa" stroke="#b45309" stroke-width="1.8"/><text x="704.0" y="51.6" text-anchor="end" class="svg-value">838,576.64</text><text x="704.0" y="220" text-anchor="end" class="svg-axis">2018-08</text></svg><p class="chart-source">来源：monthly_performance.csv</p></figure><figure class="chart"><figcaption><span class="chart-title">月度订单量（单）</span><span class="chart-caption">后期订单量维持在约 6,000–7,000 区间</span></figcaption><svg class="chart-svg" viewBox="0 0 720 304" role="img" aria-label="月度订单量（单）"><text x="0" y="25" class="svg-label">2017-01</text><rect x="150" y="10" width="478" height="20" rx="6" fill="#f1f2f5"/><rect x="150.0" y="10" width="49.2" height="20" rx="6" fill="#b45309" opacity="0.62"/><text x="720" y="25" text-anchor="end" class="svg-value">750</text><text x="0" y="67" class="svg-label">2017-05</text><rect x="150" y="52" width="478" height="20" rx="6" fill="#f1f2f5"/><rect x="150.0" y="52" width="232.5" height="20" rx="6" fill="#b45309" opacity="0.62"/><text x="720" y="67" text-anchor="end" class="svg-value">3,546</text><text x="0" y="109" class="svg-label">2017-09</text><rect x="150" y="94" width="478" height="20" rx="6" fill="#f1f2f5"/><rect x="150.0" y="94" width="272.1" height="20" rx="6" fill="#b45309" opacity="0.62"/><text x="720" y="109" text-anchor="end" class="svg-value">4,150</text><text x="0" y="151" class="svg-label">2017-11</text><rect x="150" y="136" width="478" height="20" rx="6" fill="#f1f2f5"/><rect x="150.0" y="136" width="478.0" height="20" rx="6" fill="#b45309" opacity="1.00"/><text x="720" y="151" text-anchor="end" class="svg-value">7,289</text><text x="0" y="193" class="svg-label">2018-03</text><rect x="150" y="178" width="478" height="20" rx="6" fill="#f1f2f5"/><rect x="150.0" y="178" width="459.2" height="20" rx="6" fill="#b45309" opacity="0.62"/><text x="720" y="193" text-anchor="end" class="svg-value">7,003</text><text x="0" y="235" class="svg-label">2018-05</text><rect x="150" y="220" width="478" height="20" rx="6" fill="#f1f2f5"/><rect x="150.0" y="220" width="442.6" height="20" rx="6" fill="#b45309" opacity="0.62"/><text x="720" y="235" text-anchor="end" class="svg-value">6,749</text><text x="0" y="277" class="svg-label">2018-08</text><rect x="150" y="262" width="478" height="20" rx="6" fill="#f1f2f5"/><rect x="150.0" y="262" width="416.5" height="20" rx="6" fill="#b45309" opacity="0.62"/><text x="720" y="277" text-anchor="end" class="svg-value">6,351</text></svg><p class="chart-source">来源：monthly_performance.csv</p></figure></div><div class="analysis-block"><h3>支付与分期结构</h3><p>信用卡是主要订单归组方式；长分期与高 AOV 的共变只用于提出实验，不解释为分期拉升客单。</p><figure class="chart"><figcaption><span class="chart-title">主支付方式订单占比（%）</span><span class="chart-caption">信用卡订单归组占比最高</span></figcaption><svg class="chart-svg" viewBox="0 0 720 178" role="img" aria-label="主支付方式订单占比（%）"><text x="0" y="25" class="svg-label">信用卡</text><rect x="150" y="10" width="478" height="20" rx="6" fill="#f1f2f5"/><rect x="150.0" y="10" width="478.0" height="20" rx="6" fill="#b45309" opacity="1.00"/><text x="720" y="25" text-anchor="end" class="svg-value">75.48</text><text x="0" y="67" class="svg-label">Boleto</text><rect x="150" y="52" width="478" height="20" rx="6" fill="#f1f2f5"/><rect x="150.0" y="52" width="126.0" height="20" rx="6" fill="#b45309" opacity="0.62"/><text x="720" y="67" text-anchor="end" class="svg-value">19.89</text><text x="0" y="109" class="svg-label">Voucher</text><rect x="150" y="94" width="478" height="20" rx="6" fill="#f1f2f5"/><rect x="150.0" y="94" width="19.6" height="20" rx="6" fill="#b45309" opacity="0.62"/><text x="720" y="109" text-anchor="end" class="svg-value">3.09</text><text x="0" y="151" class="svg-label">借记卡</text><rect x="150" y="136" width="478" height="20" rx="6" fill="#f1f2f5"/><rect x="150.0" y="136" width="9.8" height="20" rx="6" fill="#b45309" opacity="0.62"/><text x="720" y="151" text-anchor="end" class="svg-value">1.54</text></svg><p class="chart-source">来源：payment_type_performance.csv</p></figure><figure class="chart"><figcaption><span class="chart-title">分期区间 AOV（R$）</span><span class="chart-caption">长分期对应更高订单金额，但存在明显选择偏差</span></figcaption><svg class="chart-svg" viewBox="0 0 720 230" role="img" aria-label="分期区间 AOV（R$）"><line x1="52" y1="198.0" x2="704" y2="198.0" stroke="#e3e5ea" stroke-width="1" opacity="0.5"/><text x="42" y="202.0" text-anchor="end" class="svg-axis">42</text><line x1="52" y1="108.0" x2="704" y2="108.0" stroke="#e3e5ea" stroke-width="1" opacity="0.5"/><text x="42" y="112.0" text-anchor="end" class="svg-axis">227</text><line x1="52" y1="18.0" x2="704" y2="18.0" stroke="#e3e5ea" stroke-width="1" opacity="0.5"/><text x="42" y="22.0" text-anchor="end" class="svg-axis">413</text><line x1="52" y1="198" x2="704" y2="198" stroke="#e3e5ea" stroke-width="1"/><path d="M52.0,178.3 L215.0,163.2 L378.0,146.2 L541.0,112.2 L704.0,37.7 L704.0,198.0 L52.0,198.0 Z" fill="#b45309" opacity="0.06"/><path d="M52.0,178.3 L215.0,163.2 L378.0,146.2 L541.0,112.2 L704.0,37.7" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle class="pop" cx="52.0" cy="178.3" r="3" fill="#f7f8fa" stroke="#b45309" stroke-width="1.8"/><text x="52.0" y="168.3" text-anchor="start" class="svg-value">82.49</text><text x="52.0" y="220" text-anchor="start" class="svg-axis">1期</text><circle class="pop" cx="215.0" cy="163.2" r="3" fill="#f7f8fa" stroke="#b45309" stroke-width="1.8"/><circle class="pop" cx="378.0" cy="146.2" r="3" fill="#f7f8fa" stroke="#b45309" stroke-width="1.8"/><circle class="pop" cx="541.0" cy="112.2" r="3" fill="#f7f8fa" stroke="#b45309" stroke-width="1.8"/><circle class="pop" cx="704.0" cy="37.7" r="3" fill="#f7f8fa" stroke="#b45309" stroke-width="1.8"/><text x="704.0" y="27.7" text-anchor="end" class="svg-value">372.08</text><text x="704.0" y="220" text-anchor="end" class="svg-axis">10+期</text></svg><p class="chart-source">来源：installment_performance.csv</p></figure></div><div class="analysis-block"><h3>履约与客户体验</h3><p>晚到组评价显著更差，且配送超过 21 天后体验快速恶化；后者是探索图，不进入正式 claims。</p><figure class="chart"><figcaption><span class="chart-title">准时 vs 晚到差评率（%）</span><span class="chart-caption">晚到组差评率约为准时组的六倍</span></figcaption><svg class="chart-svg" viewBox="0 0 720 94" role="img" aria-label="准时 vs 晚到差评率（%）"><text x="0" y="25" class="svg-label">准时</text><rect x="150" y="10" width="478" height="20" rx="6" fill="#f1f2f5"/><rect x="150.0" y="10" width="81.2" height="20" rx="6" fill="#b45309" opacity="0.62"/><text x="720" y="25" text-anchor="end" class="svg-value">9.17</text><text x="0" y="67" class="svg-label">晚到</text><rect x="150" y="52" width="478" height="20" rx="6" fill="#f1f2f5"/><rect x="150.0" y="52" width="478.0" height="20" rx="6" fill="#b45309" opacity="1.00"/><text x="720" y="67" text-anchor="end" class="svg-value">53.98</text></svg><p class="chart-source">来源：delivery_group_performance.csv</p></figure><figure class="chart"><figcaption><span class="chart-title">配送区间平均评分（分）</span><span class="chart-caption">长配送区间的平均评分持续下降</span></figcaption><svg class="chart-svg" viewBox="0 0 720 230" role="img" aria-label="配送区间平均评分（分）"><line x1="52" y1="198.0" x2="704" y2="198.0" stroke="#e3e5ea" stroke-width="1" opacity="0.5"/><text x="42" y="202.0" text-anchor="end" class="svg-axis">2</text><line x1="52" y1="108.0" x2="704" y2="108.0" stroke="#e3e5ea" stroke-width="1" opacity="0.5"/><text x="42" y="112.0" text-anchor="end" class="svg-axis">3</text><line x1="52" y1="18.0" x2="704" y2="18.0" stroke="#e3e5ea" stroke-width="1" opacity="0.5"/><text x="42" y="22.0" text-anchor="end" class="svg-axis">5</text><line x1="52" y1="198" x2="704" y2="198" stroke="#e3e5ea" stroke-width="1"/><path d="M52.0,37.7 L215.0,44.8 L378.0,55.7 L541.0,89.9 L704.0,178.3 L704.0,198.0 L52.0,198.0 Z" fill="#b45309" opacity="0.06"/><path d="M52.0,37.7 L215.0,44.8 L378.0,55.7 L541.0,89.9 L704.0,178.3" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle class="pop" cx="52.0" cy="37.7" r="3" fill="#f7f8fa" stroke="#b45309" stroke-width="1.8"/><text x="52.0" y="27.7" text-anchor="start" class="svg-value">4.42</text><text x="52.0" y="220" text-anchor="start" class="svg-axis">0-7天</text><circle class="pop" cx="215.0" cy="44.8" r="3" fill="#f7f8fa" stroke="#b45309" stroke-width="1.8"/><circle class="pop" cx="378.0" cy="55.7" r="3" fill="#f7f8fa" stroke="#b45309" stroke-width="1.8"/><circle class="pop" cx="541.0" cy="89.9" r="3" fill="#f7f8fa" stroke="#b45309" stroke-width="1.8"/><circle class="pop" cx="704.0" cy="178.3" r="3" fill="#f7f8fa" stroke="#b45309" stroke-width="1.8"/><text x="704.0" y="168.3" text-anchor="end" class="svg-value">2.24</text><text x="704.0" y="220" text-anchor="end" class="svg-axis">31+天</text></svg><p class="chart-source">来源：delivery_band_performance.csv</p></figure></div><div class="analysis-block"><h3>品类、区域、客户与供给</h3><p>GMV 向头部品类、SP 州和部分卖家集中；复购偏低使履约问题更值得先治理。</p><figure class="chart"><figcaption><span class="chart-title">结构集中度（% GMV）</span><span class="chart-caption">地区与品类均存在头部集中</span></figcaption><svg class="chart-svg" viewBox="0 0 720 136" role="img" aria-label="结构集中度（% GMV）"><text x="0" y="25" class="svg-label">SP州</text><rect x="150" y="10" width="478" height="20" rx="6" fill="#f1f2f5"/><rect x="150.0" y="10" width="229.2" height="20" rx="6" fill="#b45309" opacity="0.62"/><text x="720" y="25" text-anchor="end" class="svg-value">38.36</text><text x="0" y="67" class="svg-label">Top10品类</text><rect x="150" y="52" width="478" height="20" rx="6" fill="#f1f2f5"/><rect x="150.0" y="52" width="373.3" height="20" rx="6" fill="#b45309" opacity="0.62"/><text x="720" y="67" text-anchor="end" class="svg-value">62.47</text><text x="0" y="109" class="svg-label">达到80%的卖家集合</text><rect x="150" y="94" width="478" height="20" rx="6" fill="#f1f2f5"/><rect x="150.0" y="94" width="478.0" height="20" rx="6" fill="#b45309" opacity="1.00"/><text x="720" y="109" text-anchor="end" class="svg-value">80</text></svg><p class="chart-source">来源：state/category performance CSVs</p></figure><figure class="chart"><figcaption><span class="chart-title">客户复购率（%）</span><span class="chart-caption">成熟 90 天口径低于全窗口重复客户占比</span></figcaption><svg class="chart-svg" viewBox="0 0 720 94" role="img" aria-label="客户复购率（%）"><text x="0" y="25" class="svg-label">全窗口重复客户</text><rect x="150" y="10" width="478" height="20" rx="6" fill="#f1f2f5"/><rect x="150.0" y="10" width="478.0" height="20" rx="6" fill="#b45309" opacity="1.00"/><text x="720" y="25" text-anchor="end" class="svg-value">3</text><text x="0" y="67" class="svg-label">成熟90天复购</text><rect x="150" y="52" width="478" height="20" rx="6" fill="#f1f2f5"/><rect x="150.0" y="52" width="363.3" height="20" rx="6" fill="#b45309" opacity="0.62"/><text x="720" y="67" text-anchor="end" class="svg-value">2.28</text></svg><p class="chart-source">来源：customer_summary.csv + cohort_repeat.csv</p></figure></div></section><section class="block" id="s5"><h2>结论与建议</h2><ul class="conclusions"><li class="conclusion"><span class="conclusion-text">履约风险治理是当前第一优先级；先对高风险州、卖家、品类和路线做预警与分层试点。</span><span class="chip">证据 E003</span><span class="chip">证据 E006</span></li><li class="conclusion"><span class="conclusion-text">支付结构可用于产品分层和对账，但不能把主支付方式、GMV 或支付金额误写为真实流水份额、收入或利润。</span><span class="chip">证据 E001</span><span class="chip">证据 E004</span></li><li class="conclusion"><span class="conclusion-text">复购触达与分期提示应通过随机或可比对照验证，扩量依据是增量复购、体验护栏和成本，而不是静态相关。</span><span class="chip">证据 E003</span><span class="chip">证据 E004</span><span class="chip">证据 E005</span></li></ul><h3 class="steps-title">后续分析建议</h3><ul class="steps"><li class="step"><span class="step-q">晚到治理是否改善体验与复购？</span><span class="step-need">需要：承运商、路线、距离、主动沟通触达、退款和实验分组</span></li><li class="step"><span class="step-q">分期是否带来增量客单而非高价订单自选择？</span><span class="step-need">需要：促销、价格、商品结构、授信、随机提示实验和毛利</span></li><li class="step"><span class="step-q">复购率的长期基线是多少？</span><span class="step-need">需要：更早历史订单与 2018-08 之后至少 12 个月观察窗</span></li></ul></section><section class="block" id="s6"><h2>附录</h2><p class="aside">正式数字只引用 E001-E006。</p><p class="aside">月度、配送区间与分期图属于探索性诊断。</p><p class="aside">通用质量工具的同日多单不视为订单重复。</p><p class="aside">详细口径见 semantic_contract.json，独立复核见 agents/reviewer.json。</p></section>
+</main>
+<footer class="colophon">本报告由 data-analysis skill 生成；数字来自离线证据 JSON，可逐条复算。2026-09-22</footer>
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) return;
+  var nodes = [].slice.call(
+    document.querySelectorAll('figure.chart, .finding, .analysis-block, .kpi-grid')
+  );
+  var showAll = function () {
+    nodes.forEach(function (node) { node.classList.add('in'); });
+  };
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('in');
+      observer.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -4% 0px' });
+  nodes.forEach(function (node) { node.classList.add('reveal'); observer.observe(node); });
+  // 兜底：打印、截图、后台标签页不会触发布局观察，1.5s 后强制全部显示。
+  setTimeout(showAll, 1500);
+  window.addEventListener('beforeprint', showAll);
+})();
+</script>
+<style>
+.reveal{opacity:0;transform:translateY(10px);transition:opacity .55s cubic-bezier(.4,0,.2,1),transform .55s cubic-bezier(.4,0,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media print{.reveal{opacity:1 !important;transform:none !important}}
+@media (prefers-reduced-motion: reduce){.reveal{opacity:1 !important;transform:none !important}}
+</style>
+</body>
+</html>

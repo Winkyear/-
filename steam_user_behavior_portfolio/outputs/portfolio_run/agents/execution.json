@@ -1,0 +1,14 @@
+{
+  "mode": "native_subagents",
+  "native_tool_available": true,
+  "requested_real_subagents": true,
+  "spawn_attempts": [
+    {"role": "locator", "agent_id": "/root/locator", "status": "ok"},
+    {"role": "mechanism", "agent_id": "/root/mechanism", "status": "ok"},
+    {"role": "falsifier", "agent_id": "/root/falsifier", "status": "ok"},
+    {"role": "reviewer", "agent_id": "/root/reviewer", "status": "ok", "output_status": "degraded"}
+  ],
+  "roles": ["locator", "mechanism", "falsifier", "reviewer"],
+  "reviewer_downgrades_accepted": ["C002", "C004", "C005", "C006"],
+  "note": "Reviewer 的 degraded 状态来自数据可观测性边界，而非角色执行失败。"
+}

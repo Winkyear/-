@@ -1,0 +1,739 @@
+{
+  "schema_version": "1.0",
+  "file": {
+    "path": "C:\\Users\\23793\\Documents\\ChatGPT\\简历\\steam_user_behavior_portfolio\\data\\processed\\fact_user_game.csv",
+    "name": "fact_user_game.csv",
+    "suffix": ".csv",
+    "size_bytes": 30887121,
+    "sha256": "a24400722f1c2c1cb602eb0cc385018d7f5d6ed415784cc3c297649301fc0162"
+  },
+  "main_table": "fact_user_game",
+  "sheets": [
+    {
+      "name": "fact_user_game",
+      "rows": 128801,
+      "columns": 31,
+      "header_row_zero_based": 0,
+      "header_status": "detected",
+      "date_field": "user_id",
+      "roles": {
+        "date": [
+          "release_date"
+        ],
+        "user_id": [
+          "user_id"
+        ]
+      },
+      "fields": [
+        {
+          "name": "user_id",
+          "dtype": "int64",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 12393,
+          "sample_values": [
+            5250,
+            5250,
+            5250,
+            5250,
+            5250
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 5250.0,
+            "max": 309903146.0,
+            "median": 86055705.0,
+            "mad": 49508837.0,
+            "mean": 102534552.96642107,
+            "std": 72429038.58336656,
+            "n": 128801
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00.000005250",
+            "max": "1970-01-01T00:00:00.309903146",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "name_key",
+          "dtype": "str",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 5153,
+          "sample_values": [
+            "alien swarm",
+            "cities skylines",
+            "counter-strike",
+            "counter-strike source",
+            "day of defeat"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": false
+        },
+        {
+          "name": "game_name",
+          "dtype": "str",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 5153,
+          "sample_values": [
+            "Alien Swarm",
+            "Cities Skylines",
+            "Counter-Strike",
+            "Counter-Strike Source",
+            "Day of Defeat"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": false
+        },
+        {
+          "name": "purchased",
+          "dtype": "int64",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 1,
+          "sample_values": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 1.0,
+            "max": 1.0,
+            "median": 1.0,
+            "mad": 0.0,
+            "mean": 1.0,
+            "std": 0.0,
+            "n": 128801
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00.000000001",
+            "max": "1970-01-01T00:00:00.000000001",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "play_hours",
+          "dtype": "float64",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 1599,
+          "sample_values": [
+            4.9,
+            144.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 0.0,
+            "max": 11754.0,
+            "median": 0.3,
+            "mad": 0.3,
+            "mean": 26.749526789388284,
+            "std": 171.3921374747089,
+            "n": 128801
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00",
+            "max": "1970-01-01T00:00:00.000011754",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "played",
+          "dtype": "int64",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 2,
+          "sample_values": [
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 0.0,
+            "max": 1.0,
+            "median": 1.0,
+            "mad": 0.0,
+            "mean": 0.547154137002042,
+            "std": 0.49777345358514713,
+            "n": 128801
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00",
+            "max": "1970-01-01T00:00:00.000000001",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "appid",
+          "dtype": "float64",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 2385,
+          "sample_values": [
+            630.0,
+            10.0,
+            30.0,
+            40.0,
+            570.0
+          ],
+          "is_numeric": true,
+          "is_date_candidate": false,
+          "numeric": {
+            "min": 10.0,
+            "max": 961620.0,
+            "median": 203770.0,
+            "mad": 123570.0,
+            "mean": 149327.54225070085,
+            "std": 129653.448030446,
+            "n": 62425
+          }
+        },
+        {
+          "name": "name",
+          "dtype": "str",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 2385,
+          "sample_values": [
+            "Alien Swarm",
+            "Counter-Strike",
+            "Day of Defeat",
+            "Deathmatch Classic",
+            "Dota 2"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": false
+        },
+        {
+          "name": "release_date",
+          "dtype": "str",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 1194,
+          "sample_values": [
+            "2010-07-19",
+            "2000-11-01",
+            "2003-05-01",
+            "2001-06-01",
+            "2013-07-09"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": false
+        },
+        {
+          "name": "release_year",
+          "dtype": "float64",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 23,
+          "sample_values": [
+            2010.0,
+            2000.0,
+            2003.0,
+            2001.0,
+            2013.0
+          ],
+          "is_numeric": true,
+          "is_date_candidate": false,
+          "numeric": {
+            "min": 1997.0,
+            "max": 2019.0,
+            "median": 2013.0,
+            "mad": 2.0,
+            "mean": 2011.6054945935123,
+            "std": 3.843869801787694,
+            "n": 62425
+          }
+        },
+        {
+          "name": "developer",
+          "dtype": "str",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 1780,
+          "sample_values": [
+            "Valve",
+            "Valve",
+            "Valve",
+            "Valve",
+            "Valve"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": false
+        },
+        {
+          "name": "publisher",
+          "dtype": "str",
+          "missing_count": 66383,
+          "missing_rate": 0.515391961242537,
+          "unique_count": 1300,
+          "sample_values": [
+            "Valve",
+            "Valve",
+            "Valve",
+            "Valve",
+            "Valve"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": false
+        },
+        {
+          "name": "platforms",
+          "dtype": "str",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 4,
+          "sample_values": [
+            "windows",
+            "windows;mac;linux",
+            "windows;mac;linux",
+            "windows;mac;linux",
+            "windows;mac;linux"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": false
+        },
+        {
+          "name": "categories",
+          "dtype": "str",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 718,
+          "sample_values": [
+            "Single-player;Multi-player;Co-op;Steam Achievements;Captions available;Steam Cloud;Stats;Includes level editor",
+            "Multi-player;Online Multi-Player;Local Multi-Player;Valve Anti-Cheat enabled",
+            "Multi-player;Valve Anti-Cheat enabled",
+            "Multi-player;Online Multi-Player;Local Multi-Player;Valve Anti-Cheat enabled",
+            "Multi-player;Co-op;Steam Trading Cards;Steam Workshop;SteamVR Collectibles;In-App Purchases;Valve Anti-Cheat enabled"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": false
+        },
+        {
+          "name": "genres",
+          "dtype": "str",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 317,
+          "sample_values": [
+            "Action",
+            "Action",
+            "Action",
+            "Action",
+            "Action;Free to Play;Strategy"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": false
+        },
+        {
+          "name": "primary_genre",
+          "dtype": "str",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 19,
+          "sample_values": [
+            "Action",
+            "Action",
+            "Action",
+            "Action",
+            "Action"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": false
+        },
+        {
+          "name": "steamspy_tags",
+          "dtype": "str",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 1550,
+          "sample_values": [
+            "Free to Play;Co-op;Action",
+            "Action;FPS;Multiplayer",
+            "FPS;World War II;Multiplayer",
+            "Action;FPS;Multiplayer",
+            "Free to Play;MOBA;Strategy"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": false
+        },
+        {
+          "name": "positive_ratings",
+          "dtype": "float64",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 1425,
+          "sample_values": [
+            17435.0,
+            124534.0,
+            3416.0,
+            1273.0,
+            863507.0
+          ],
+          "is_numeric": true,
+          "is_date_candidate": false,
+          "numeric": {
+            "min": 0.0,
+            "max": 863507.0,
+            "median": 17435.0,
+            "mad": 16921.0,
+            "mean": 132000.13648378054,
+            "std": 243300.58115821713,
+            "n": 62425
+          }
+        },
+        {
+          "name": "negative_ratings",
+          "dtype": "float64",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 885,
+          "sample_values": [
+            941.0,
+            3339.0,
+            398.0,
+            267.0,
+            142079.0
+          ],
+          "is_numeric": true,
+          "is_date_candidate": false,
+          "numeric": {
+            "min": 0.0,
+            "max": 142079.0,
+            "median": 2179.0,
+            "mad": 1969.0,
+            "mean": 18161.498870644773,
+            "std": 38758.79223763029,
+            "n": 62425
+          }
+        },
+        {
+          "name": "rating_count",
+          "dtype": "float64",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 1585,
+          "sample_values": [
+            18376.0,
+            127873.0,
+            3814.0,
+            1540.0,
+            1005586.0
+          ],
+          "is_numeric": true,
+          "is_date_candidate": false,
+          "numeric": {
+            "min": 2.0,
+            "max": 1005586.0,
+            "median": 20221.0,
+            "mad": 19469.0,
+            "mean": 150161.63535442532,
+            "std": 279679.2755907123,
+            "n": 62425
+          }
+        },
+        {
+          "name": "positive_rate",
+          "dtype": "float64",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 2240,
+          "sample_values": [
+            0.9487919024814976,
+            0.9738881546534452,
+            0.8956476140534871,
+            0.8266233766233766,
+            0.8587102445738107
+          ],
+          "is_numeric": true,
+          "is_date_candidate": false,
+          "numeric": {
+            "min": 0.0,
+            "max": 1.0,
+            "median": 0.8587102445738107,
+            "mad": 0.07578104961745769,
+            "mean": 0.8352537657171636,
+            "std": 0.12914073208189394,
+            "n": 62425
+          }
+        },
+        {
+          "name": "average_playtime",
+          "dtype": "float64",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 731,
+          "sample_values": [
+            371.0,
+            17612.0,
+            187.0,
+            258.0,
+            23944.0
+          ],
+          "is_numeric": true,
+          "is_date_candidate": false,
+          "numeric": {
+            "min": 0.0,
+            "max": 95242.0,
+            "median": 715.0,
+            "mad": 643.0,
+            "mean": 3785.7063356027234,
+            "std": 6730.85965326345,
+            "n": 62425
+          }
+        },
+        {
+          "name": "median_playtime",
+          "dtype": "float64",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 687,
+          "sample_values": [
+            83.0,
+            317.0,
+            34.0,
+            184.0,
+            801.0
+          ],
+          "is_numeric": true,
+          "is_date_candidate": false,
+          "numeric": {
+            "min": 0.0,
+            "max": 190445.0,
+            "median": 306.0,
+            "mad": 230.0,
+            "mean": 538.2135362434922,
+            "std": 1520.1060564036352,
+            "n": 62425
+          }
+        },
+        {
+          "name": "owners",
+          "dtype": "str",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 12,
+          "sample_values": [
+            "2000000-5000000",
+            "10000000-20000000",
+            "5000000-10000000",
+            "5000000-10000000",
+            "100000000-200000000"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": false
+        },
+        {
+          "name": "owner_midpoint",
+          "dtype": "float64",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 12,
+          "sample_values": [
+            3500000.0,
+            15000000.0,
+            7500000.0,
+            7500000.0,
+            150000000.0
+          ],
+          "is_numeric": true,
+          "is_date_candidate": false,
+          "numeric": {
+            "min": 10000.0,
+            "max": 150000000.0,
+            "median": 3500000.0,
+            "mad": 3150000.0,
+            "mean": 18006635.24229075,
+            "std": 39379556.816286914,
+            "n": 62425
+          }
+        },
+        {
+          "name": "price",
+          "dtype": "float64",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 94,
+          "sample_values": [
+            0.0,
+            7.19,
+            3.99,
+            3.99,
+            0.0
+          ],
+          "is_numeric": true,
+          "is_date_candidate": false,
+          "numeric": {
+            "min": 0.0,
+            "max": 69.99,
+            "median": 5.59,
+            "mad": 5.59,
+            "mean": 6.48311269523428,
+            "std": 7.33940860428457,
+            "n": 62425
+          }
+        },
+        {
+          "name": "price_band",
+          "dtype": "str",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 5,
+          "sample_values": [
+            "免费",
+            "£5-10",
+            "£0-5",
+            "£0-5",
+            "免费"
+          ],
+          "is_numeric": false,
+          "is_date_candidate": false
+        },
+        {
+          "name": "is_free",
+          "dtype": "float64",
+          "missing_count": 66376,
+          "missing_rate": 0.5153376138384019,
+          "unique_count": 2,
+          "sample_values": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "is_numeric": true,
+          "is_date_candidate": false,
+          "numeric": {
+            "min": 0.0,
+            "max": 1.0,
+            "median": 0.0,
+            "mad": 0.0,
+            "mean": 0.37305566680016017,
+            "std": 0.48362059818274666,
+            "n": 62425
+          }
+        },
+        {
+          "name": "store_matched",
+          "dtype": "int64",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 2,
+          "sample_values": [
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 0.0,
+            "max": 1.0,
+            "median": 0.0,
+            "mad": 0.0,
+            "mean": 0.4846623861615981,
+            "std": 0.4997666423133068,
+            "n": 128801
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00",
+            "max": "1970-01-01T00:00:00.000000001",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "observed_playable",
+          "dtype": "int64",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 2,
+          "sample_values": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 0.0,
+            "max": 1.0,
+            "median": 1.0,
+            "mad": 0.0,
+            "mean": 0.9121978866623707,
+            "std": 0.28300799294433093,
+            "n": 128801
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00",
+            "max": "1970-01-01T00:00:00.000000001",
+            "unique_days": 1
+          }
+        },
+        {
+          "name": "playable_purchase",
+          "dtype": "int64",
+          "missing_count": 0,
+          "missing_rate": 0.0,
+          "unique_count": 2,
+          "sample_values": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "is_numeric": true,
+          "is_date_candidate": true,
+          "numeric": {
+            "min": 0.0,
+            "max": 1.0,
+            "median": 1.0,
+            "mad": 0.0,
+            "mean": 0.9121978866623707,
+            "std": 0.28300799294433093,
+            "n": 128801
+          },
+          "date_range": {
+            "min": "1970-01-01T00:00:00",
+            "max": "1970-01-01T00:00:00.000000001",
+            "unique_days": 1
+          }
+        }
+      ],
+      "duplicate_rows": 0,
+      "source_ref": {
+        "sheet": "fact_user_game",
+        "header_row": 1
+      },
+      "date_range": {
+        "min": "1970-01-01T00:00:00",
+        "max": "1970-01-01T00:00:00",
+        "unique_days": 1,
+        "missing_days_in_span": 0
+      }
+    }
+  ],
+  "notes": [
+    "字段角色是基于名称和类型的候选识别，必须在语义合同中确认。",
+    "画像不包含业务判断，所有异常结论需要进入后续计算步骤。"
+  ]
+}

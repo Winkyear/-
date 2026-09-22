@@ -1,0 +1,119 @@
+{
+  "agent": "mechanism",
+  "status": "degraded",
+  "generated_at": "2026-09-22T17:31:51.5110251+08:00",
+  "findings": [
+    {
+      "statement": "购买后未启动存量与游玩时长高度集中同时出现：排除全样本从未出现 play 的内容后，仍有 47,018 个可行动未启动购买对；Top 10 内容占 58.18% 游玩时长，Top 1% 内容占 77.60% 游玩时长。这与“游玩注意力向少数内容集中”的可观测候选一致，不表示已确认因果。",
+      "mechanism_status": "supported_candidate",
+      "level": "L2",
+      "evidence_ids": ["E002", "E003"],
+      "limitations": [
+        "数据没有购买与启动的时间顺序，无法识别注意力集中是否先于未启动存量形成。",
+        "无曝光、推荐或折扣字段，无法区分用户偏好、内容可见度与促销结构。"
+      ],
+      "confidence": "high"
+    },
+    {
+      "statement": "游戏库广度、较低启动率和较高累计游玩时长在“收藏型未激活”人群中同时出现：该组占用户 24.56%，平均可玩库 32.83 款，平均启动率 55.39%，平均累计游玩 778.76 小时。这与“大库用户的游玩深度可集中在库内部分内容”候选一致。",
+      "mechanism_status": "supported_candidate",
+      "level": "L1",
+      "evidence_ids": ["E004"],
+      "limitations": [
+        "人群本身由游戏库规模、启动率和游玩时长规则分层，该同步关系存在分组定义上的内生性，不是独立验证。",
+        "均值可受极端长时用户影响；虽提供中位数，但没有完整分布或置信区间。"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "statement": "在精确匹配到商店元数据的子集内，Action 类型同时占 84.44% 游玩时长，启动率为 66.74%。类型结构与时长集中同步出现，可作为内容结构候选，但不能外推到全量购买对。",
+      "mechanism_status": "supported_candidate",
+      "level": "L2",
+      "evidence_ids": ["E005", "E006"],
+      "limitations": [
+        "商店元数据仅覆盖 48.47% 的购买对，且未匹配部分不可假定与已匹配部分同分布。",
+        "primary_genre 只取 genres 第一项，多类型内容被压缩为单一标签。"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "statement": "“游玩时长集中只是购买量集中的镜像”与数据不一致：Top 10 内容的购买占比为 12.09%，但游玩时长占比为 58.18%；Top 1% 的购买占比为 26.93%，游玩时长占比为 77.60%。",
+      "mechanism_status": "alternative",
+      "level": "L2",
+      "evidence_ids": ["E003"],
+      "limitations": [
+        "该对比排除了简单的同比例镜像解释，但未排除购买量与单位用户游玩深度共同出现的情况。"
+      ],
+      "confidence": "high"
+    },
+    {
+      "statement": "“DLC、地图包等不可独立启动内容完全解释购买后未启动”与数据不一致：排除 11,309 个全样本从未出现 play 的购买对后，可玩口径启动率仍仅 59.98%，且仍有 47,018 个未启动购买对。",
+      "mechanism_status": "alternative",
+      "level": "L2",
+      "evidence_ids": ["E002"],
+      "limitations": [
+        "observed_playable 是按“全样本至少有一次 play”观察定义，不是官方内容类型标注，个别可玩但样本中未观测到启动的内容可能被误分。"
+      ],
+      "confidence": "high"
+    },
+    {
+      "statement": "“低启动用户等同于整体低参与用户”与分层结果不一致：“收藏型未激活”组平均启动率 55.39%，但平均游玩 778.76 小时，与“深度活跃”组的 766.38 小时接近。",
+      "mechanism_status": "alternative",
+      "level": "L1",
+      "evidence_ids": ["E004"],
+      "limitations": [
+        "分层规则使用了启动率和游玩时长，因此只能排除“两者总是同向”的简单叙事，不能用来识别人群形成机制。"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "statement": "价格、评分、发行年份、发行商或更细类型是否与购买后启动差异和游玩时长集中同步出现，在全量样本上不可检验。",
+      "mechanism_status": "not_testable",
+      "level": "L1",
+      "evidence_ids": ["E006"],
+      "limitations": [
+        "商店元数据购买对匹配率仅 48.47%，相关字段在主表的缺失率为 51.53%。",
+        "当前没有对已匹配与未匹配样本的可比性证据。"
+      ],
+      "confidence": "high"
+    },
+    {
+      "statement": "折扣、推荐曝光、购买渠道、设备/平台、地区与用户获取来源是否与启动差异或时长集中同步出现，当前不可检验。",
+      "mechanism_status": "not_testable",
+      "level": "L0",
+      "evidence_ids": [],
+      "limitations": [
+        "处理后数据没有上述曝光、渠道、设备、地区或促销字段。"
+      ],
+      "confidence": "high"
+    },
+    {
+      "statement": "任何关于“先购买、后曝光、再启动”的时序机制，以及任何因果解释，在当前 user_id × name_key 截面聚合粒度上不可检验。",
+      "mechanism_status": "not_testable",
+      "level": "L0",
+      "evidence_ids": ["E001"],
+      "limitations": [
+        "语义合同未定义日期字段，基线是全量分布而非时间窗口。",
+        "没有实验、准实验、处理组/对照组或可用的干预时点。"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "conflicts": [
+    {
+      "statement": "03_quality.json 将 user_id 报告为 duplicate_date，并把异常日期写为 1970-01-01；但语义合同没有 date_field，主粒度为 user_id × name_key。因此这些时间型质量标记不能被解读为业务日期异动。",
+      "evidence_ids": []
+    },
+    {
+      "statement": "src/analysis_pipeline.py 当前分层标签为“大库低启动”，而已生成的 CSV 和 E004 使用“收藏型未激活”。这是代码与当前工件的标签漂移，需在重现报告前统一。",
+      "evidence_ids": ["E004"]
+    }
+  ],
+  "missing_data": [
+    "购买时间、首次启动时间和按日/周观测窗口",
+    "推荐曝光、折扣/券、购买渠道和活动触达记录",
+    "设备、操作系统、地区与网络环境",
+    "全量且可对账的商店元数据，尤其是价格、评分、发行时间和官方可玩性/DLC 标识",
+    "任何可比对照、干预或随机分组信息"
+  ]
+}

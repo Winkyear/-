@@ -1,0 +1,56 @@
+{
+  "decision": "Steam 平台内容运营负责人需要决定，有限的召回与推荐资源应优先投向哪些用户层和内容层，以提高已拥有游戏的启动与有效游玩。",
+  "backward_steps": [
+    {
+      "step": 1,
+      "question": "已拥有但从未出现游玩记录的规模有多大？",
+      "needed_fields": ["user_id", "game_name", "behavior", "value"],
+      "available": true,
+      "quality_status": "confirmed",
+      "fallback": "若 purchase 与 play 无法在 user-game 粒度对齐，只报告行为记录数。",
+      "max_claim_level": "L1"
+    },
+    {
+      "step": 2,
+      "question": "哪些用户层同时具备较大游戏库与较低购买后启动率？",
+      "needed_fields": ["user_id", "purchased", "played", "play_hours"],
+      "available": true,
+      "quality_status": "confirmed",
+      "fallback": "若用户 ID 缺失，则不做用户分层。",
+      "max_claim_level": "L3"
+    },
+    {
+      "step": 3,
+      "question": "内容消费是否集中，哪些高规模游戏的启动表现偏低？",
+      "needed_fields": ["game_name", "purchase_users", "played_users", "total_play_hours"],
+      "available": true,
+      "quality_status": "confirmed",
+      "fallback": "若游戏名无法稳定识别，仅做用户层分析。",
+      "max_claim_level": "L3"
+    },
+    {
+      "step": 4,
+      "question": "游戏类型、价格与发行商能否解释差异？",
+      "needed_fields": ["genres", "price", "publisher", "event_time", "price_at_purchase"],
+      "available": false,
+      "quality_status": "inferred",
+      "fallback": "只对精确匹配样本做关联性描述，不解释历史购买原因。",
+      "max_claim_level": "L1"
+    }
+  ],
+  "selected_methods": ["segmentation", "contribution"],
+  "selected_charts": ["用户分层对比", "游戏规模-启动率矩阵", "头部时长贡献"],
+  "contract": {
+    "metric": {
+      "purchase_activation_rate": "出现 play_hours>0 的 user-game 数 / 可观察为可独立游玩的 purchase user-game 数",
+      "total_play_hours": "play 行 value 在 user-game 粒度的合计",
+      "content_concentration": "头部游戏游玩时长 / 全部游戏游玩时长"
+    },
+    "grain": "user_id × normalized_game_name",
+    "baseline_or_control": "横截面全量与分位数基线，无时间对照和实验对照",
+    "exclusions": ["无可解析用户 ID 或游戏名的记录", "非法 behavior", "重复完全相同记录"],
+    "assumptions": ["purchase 表示拥有关系", "play_hours>0 表示至少启动过一次", "全样本从未出现 play 的内容可能为 DLC 或地图包，单独披露"]
+  },
+  "missing_data": ["事件时间", "订单金额与退款", "曝光与推荐日志", "活动/版本字段", "历史价格"],
+  "stop_conditions": ["不计算 DAU、留存、流失、LTV", "不把价格或类型关联写成因果", "不声称策略会带来确定增量"]
+}
